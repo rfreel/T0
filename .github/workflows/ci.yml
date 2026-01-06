@@ -19,11 +19,10 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Install pnpm
-        run: npm install -g pnpm@10.13.1
-
-      - name: Enable Corepack
-        run: corepack enable
+      - name: Enable Corepack and Prepare pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.13.1 --activate
 
       - name: Install dependencies
         run: pnpm install
