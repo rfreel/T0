@@ -1,0 +1,44 @@
+name: Feature Request
+description: Suggest an idea or improvement
+labels: [enhancement]
+title: '[Feature]: '
+body:
+  - type: markdown
+    attributes:
+      value: 'Thanks for proposing a feature!'
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: Short description of the desired feature.
+      placeholder: 'Add support for ...'
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: 'What problem does this solve?'
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: 'Describe your idea.'
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: 'Other approaches you tried or considered.'
+    validations:
+      required: false
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks and Mitigations
+      description: 'Potential downsides and how to mitigate them.'
+    validations:
+      required: false

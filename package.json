@@ -1,0 +1,47 @@
+{
+  "name": "t0-template",
+  "version": "0.1.0",
+  "description": "Production-grade TypeScript library and CLI starter.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": "^10.13.1"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --ext .ts,.tsx --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "build": "tsc -p tsconfig.build.json",
+    "ci": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "cli": "node dist/cli.js"
+  },
+  "main": "dist/index.js",
+  "bin": {
+    "t0": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "typescript",
+    "cli",
+    "template"
+  ],
+  "author": "",
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "prettier": "^3.3.2",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {}
+}
