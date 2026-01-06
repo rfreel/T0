@@ -9,6 +9,7 @@ A production-grade starter for building TypeScript libraries with a companion CL
    corepack enable
    corepack prepare pnpm@10.13.1 --activate
    ```
+   If you see `pnpm: command not found`, rerun the `corepack prepare` line to install the pinned pnpm.
 2. Install dependencies:
    ```bash
    pnpm install
@@ -60,6 +61,12 @@ A production-grade starter for building TypeScript libraries with a companion CL
 - License: MIT
 
 Any deviations from these defaults must be documented here and enforced in CI.
+
+## Troubleshooting
+
+- **`pnpm: command not found`**: Run `corepack prepare pnpm@10.13.1 --activate` to install the pinned version (or install pnpm 10.13.1 via your package manager).
+- **Registry access issues**: Update `.npmrc` with an allowed registry mirror and rerun `pnpm install`. Regenerate and commit `pnpm-lock.yaml` after a successful install.
+- **CI uses pnpm 10.13.1** via `pnpm/action-setup@v4`; ensure local tooling matches to avoid lockfile churn.
 
 ## Release and Versioning
 
