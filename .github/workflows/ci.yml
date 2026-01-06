@@ -22,6 +22,9 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
+      - name: Install pnpm
+        run: corepack prepare pnpm@10.13.1 --activate
+
       - name: Install dependencies
         run: pnpm install
 
