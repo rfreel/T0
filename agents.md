@@ -69,3 +69,6 @@ Provide clear guidance for AI and human contributors to collaborate safely and s
 - To update dependencies: `pnpm update` (ensure CI stays green).
 - To create releases: follow the README defaults section and document any deviations.
 - Update the registry in `.npmrc` only if required by your environment and regenerate `pnpm-lock.yaml` afterward.
+- To run checks: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`.
+- To update dependencies: `pnpm update` (ensure CI stays green).
+- To create releases: follow the README defaults section and document any deviations.
