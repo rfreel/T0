@@ -1,13 +1,9 @@
 # Canonical Loop Scaffold
 
-Center = loop/ files, Radius = last 50 lines of loop/log.txt, Tangent = pre-commit + CI checks.
-Keep the loop small: only radius lines are in context.
-Back-pressure comes from pre-commit locally or CI remotely.
-The loop is bash-driven and stack-agnostic.
-When CI fails, capture the error vector in loop/last_error.txt.
-
-## Usage
-A) PR-only: push a branch and let CI enforce the tangent.
-B) Codespaces/local: run scripts/ralph/loop.sh to apply radius + pre-commit.
-
-To intentionally trigger failure: break prd.json or exceed 50 lines in loop/log.txt.
+Center = loop/ files, Radius = last 50 lines of loop/log.txt, Tangent = pre-commit + CI.
+PATCH-ONLY pipeline: loop.sh -> step.sh -> llm_stub.sh -> apply_patch.sh -> invariants.sh/precommit_gate.sh.
+loop.sh runs one iteration unless --watch is set.
+Use scripts/ralph/invariants.sh to validate required files and radius.
+CI enforces invariants and pre-commit across all files.
+If a gate fails, capture details in loop/last_error.txt and append a short log entry.
+Keep loop/log.txt within radius and update prd.json/progress.txt after passing.

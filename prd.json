@@ -12,6 +12,17 @@
       ],
       "passes": true,
       "notes": "Implemented loop center files, radius enforcement scripts, CI back-pressure, and pre-commit config."
+    },
+    {
+      "id": "SHELL-010",
+      "title": "Top10 scripts + CI wiring",
+      "acceptance": [
+        "loop.sh orchestrates PATCH-ONLY pipeline with llm_stub.sh",
+        "invariants.sh enforces required files, JSON validity, conflict markers, and radius",
+        "CI runs script contract checks, invariants, ci_gate, and pre-commit"
+      ],
+      "passes": true,
+      "notes": "Added top10 scripts, llm_stub contracts, and wired invariants/ci/pre-commit gates."
     }
   ]
 }

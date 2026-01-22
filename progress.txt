@@ -4,3 +4,5 @@
 2026-01-22 | SHELL-001 | scaffold started | learned repo center/radius/tangent mapping
 
 2026-01-22 | SHELL-001 | scaffold complete | enforced radius + CI tangent
+
+2026-01-22 | SHELL-010 | top10 scripts + CI wiring | added top10 scripts and CI contract gates
