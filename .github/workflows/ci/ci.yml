@@ -1,0 +1,29 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  backpressure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Invariants (fast back-pressure)
+        run: |
+          set -e
+          # Required loop files must exist
+          test -f AGENTS.md
+          test -f prd.json
+          test -f progress.txt
+
+          # prd.json must be valid JSON
+          python - <<'PY'
+          import json
+          json.load(open("prd.json","r",encoding="utf-8"))
+          print("prd.json valid")
+          PY
+
+          # Block merge-conflict markers
+          ! grep -R --line-number "<<<<<<<" . || (echo "Conflict markers found" && exit 1)
