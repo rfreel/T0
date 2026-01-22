@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "SHELL-001",
+      "title": "Scaffold canonical loop center/radius/tangent",
+      "acceptance": [
+        "loop/ exists with GOAL.md, RULES.md, log.txt, last_error.txt",
+        "scripts/ralph/loop.sh and radius.sh exist",
+        "CI runs and blocks invalid loop state",
+        "progress.txt exists and receives a first entry"
+      ],
+      "passes": true,
+      "notes": "Implemented loop center files, radius enforcement scripts, CI back-pressure, and pre-commit config."
+    }
+  ]
+}

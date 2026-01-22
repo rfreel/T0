@@ -1,0 +1,2 @@
+# loop/last_error.txt
+# Latest failure output (the “error vector”).

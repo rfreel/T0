@@ -1,0 +1,6 @@
+# progress.txt (append-only)
+# YYYY-MM-DD | PRD-ID | outcome | what I learned
+
+2026-01-22 | SHELL-001 | scaffold started | learned repo center/radius/tangent mapping
+
+2026-01-22 | SHELL-001 | scaffold complete | enforced radius + CI tangent
