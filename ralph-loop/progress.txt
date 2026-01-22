@@ -1,0 +1,2 @@
+NOW: deliver Increment 0001 -- verifier passes.
+NEXT: replace OK stub with real work path.
