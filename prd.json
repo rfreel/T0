@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "SCAFFOLD-001",
+      "title": "Add Ralph loop state files",
+      "acceptance": [
+        "AGENTS.md exists and defines the loop",
+        "prd.json exists and contains at least one item",
+        "progress.txt exists and has an initial entry"
+      ],
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}
