@@ -34,6 +34,17 @@
       ],
       "passes": true,
       "notes": "Added loop/PLAN_REPORT.md to guide LLM planning with gates, risks, and artifacts."
+    },
+    {
+      "id": "REPORT-002",
+      "title": "Provide a GitHub planning report for the Ralph loop master prompt",
+      "acceptance": [
+        "loop/GITHUB_PLAN_REPORT.md summarizes required files and constraints",
+        "Report includes a step-by-step plan aligned to one-task-per-iteration",
+        "Report lists verification gates and risks"
+      ],
+      "passes": true,
+      "notes": "Added loop/GITHUB_PLAN_REPORT.md with constraints, plan, gates, and risks."
     }
   ]
 }
