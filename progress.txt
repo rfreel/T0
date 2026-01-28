@@ -4,3 +4,7 @@
 2026-01-22 | SHELL-001 | scaffold started | learned repo center/radius/tangent mapping
 
 2026-01-22 | SHELL-001 | scaffold complete | enforced radius + CI tangent
+
+2026-01-28 | DECIDE-001 | complete | documented LoopSpec gates and stop rules
+
+2026-01-28 | REPORT-001 | complete | added LLM planning report for GitHub loop
