@@ -1,5 +1,7 @@
 # Ralph Loop Task Tracking
 
+Repeat the loop until all tasks are complete, updating the checkboxes after each verified iteration.
+
 Phase 1: Foundation
 - [ ] 1.1 Create directory structure (src/, tests/, bin/)
 - [ ] 1.2 Initialize Node.js project (package.json with CLI bin entry)
