@@ -14,3 +14,5 @@
 2026-01-28 | TRACK-001 | complete | added task tracking checklist for phases 1-6
 
 2026-01-28 | TRACK-002 | complete | added repeat-until-complete guidance
+
+2026-01-28 | REPORT-003 | complete | added autocommit zero-friction guidance

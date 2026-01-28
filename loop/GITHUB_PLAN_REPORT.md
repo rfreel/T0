@@ -8,6 +8,7 @@ Produce a plan for building a fully local Ralph loop system (orchestrator, tests
 - No external dependencies beyond the AI agent (except explicitly listed dev tools in the spec).
 - One task per iteration; run verification before committing.
 - Completion requires emitting `<promise>COMPLETE</promise>` only after all checks pass.
+- Favor GitHub autocommit zero-friction flow: each iteration should auto-commit successful changes with minimal manual steps.
 
 ## Required File Manifest (23 files)
 - Core loop: `.gitignore`, `loop.sh`, `PROMPT.md`, `IMPLEMENTATION_PLAN.md`, `AGENTS.md`, `README.md`.
@@ -30,6 +31,7 @@ Produce a plan for building a fully local Ralph loop system (orchestrator, tests
 6. **E2E + docs**: add `tests/test_e2e_real_agent.sh` and `TESTING.md`.
 7. **Tooling + CI**: add `package.json`, `.eslintrc.js`, `jest.config.js`, and workflow.
 8. **Verification pass**: run unit/integration/property/fault tests per checklist, fix failures, then emit completion promise.
+9. **Autocommit safeguard**: after each verified change, auto-commit with a single-purpose message; avoid batching unrelated tasks to keep GitHub autocommit frictionless.
 
 ## Verification Gates
 - **Precheck**: confirm task selection (single plan item), required directories exist.
@@ -41,6 +43,7 @@ Produce a plan for building a fully local Ralph loop system (orchestrator, tests
 - **Test dependencies**: BATS/Jest may not be installed; document prerequisites in TESTING.md.
 - **Disk-full test**: requires root; ensure skip behavior is documented.
 - **Promise emission**: only after all checks pass to avoid premature completion.
+- **Autocommit churn**: keep commits scoped to one plan item to reduce review friction.
 
 ## Required Artifacts
 - All 23 files with the specified content.

@@ -65,6 +65,16 @@
       ],
       "passes": true,
       "notes": "Added repetition guidance to task tracking checklist."
+    },
+    {
+      "id": "REPORT-003",
+      "title": "Update GitHub plan for autocommit zero-friction workflow",
+      "acceptance": [
+        "loop/GITHUB_PLAN_REPORT.md references GitHub autocommit zero-friction flow",
+        "Plan steps mention auto-commit behavior and safeguards"
+      ],
+      "passes": true,
+      "notes": "Updated GitHub plan with autocommit zero-friction guidance and safeguards."
     }
   ]
 }
