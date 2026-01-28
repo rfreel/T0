@@ -23,6 +23,38 @@
       ],
       "passes": true,
       "notes": "Documented LoopSpec with gates, budgets, and stop rules in loop/LOOPSPEC.md."
+    },
+    {
+      "id": "REPORT-001",
+      "title": "Provide an LLM planning report for GitHub work",
+      "acceptance": [
+        "loop/PLAN_REPORT.md summarizes repo goals, constraints, and loop contract",
+        "Report includes actionable planning steps and required artifacts",
+        "Report highlights risks and verification gates"
+      ],
+      "passes": true,
+      "notes": "Added loop/PLAN_REPORT.md to guide LLM planning with gates, risks, and artifacts."
+    },
+    {
+      "id": "REPORT-002",
+      "title": "Provide a GitHub planning report for the Ralph loop master prompt",
+      "acceptance": [
+        "loop/GITHUB_PLAN_REPORT.md summarizes required files and constraints",
+        "Report includes a step-by-step plan aligned to one-task-per-iteration",
+        "Report lists verification gates and risks"
+      ],
+      "passes": true,
+      "notes": "Added loop/GITHUB_PLAN_REPORT.md with constraints, plan, gates, and risks."
+    },
+    {
+      "id": "TRACK-001",
+      "title": "Add task tracking checklist for Ralph loop deliverables",
+      "acceptance": [
+        "loop/TASK_TRACKING.md lists phases and tasks with checkboxes",
+        "Checklist matches the requested Phase 1-6 items"
+      ],
+      "passes": true,
+      "notes": "Added loop/TASK_TRACKING.md with phase checklists and tasks."
     }
   ]
 }
