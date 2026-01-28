@@ -10,6 +10,16 @@ repos:
 
   - repo: local
     hooks:
+      - id: shellcheck-ralph
+        name: shellcheck (scripts/ralph)
+        entry: shellcheck
+        language: system
+        files: ^scripts/ralph/.*\.sh$
+      - id: shfmt-ralph
+        name: shfmt (scripts/ralph)
+        entry: shfmt -w -s
+        language: system
+        files: ^scripts/ralph/.*\.sh$
       - id: enforce-log-radius
         name: enforce log radius (<= 50 lines)
         entry: bash -c 'test "$(wc -l < loop/log.txt)" -le 50'

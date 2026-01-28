@@ -28,11 +28,10 @@ set -e
 
 PC_OUT="$(mktemp)"
 PC_EXIT=0
-if command -v pre-commit >/dev/null 2>&1; then
-  pre-commit run --all-files >"$PC_OUT" 2>&1 || PC_EXIT=$?
-else
-  echo "pre-commit not installed locally; CI will enforce." >"$PC_OUT"
-fi
+set +e
+bash scripts/ralph/tangent.sh >"$PC_OUT" 2>&1
+PC_EXIT=$?
+set -e
 
 if [ "$B_EXIT" -ne 0 ] || [ "$PC_EXIT" -ne 0 ]; then
   {
