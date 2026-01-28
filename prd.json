@@ -45,6 +45,16 @@
       ],
       "passes": true,
       "notes": "Added loop/GITHUB_PLAN_REPORT.md with constraints, plan, gates, and risks."
+    },
+    {
+      "id": "TRACK-001",
+      "title": "Add task tracking checklist for Ralph loop deliverables",
+      "acceptance": [
+        "loop/TASK_TRACKING.md lists phases and tasks with checkboxes",
+        "Checklist matches the requested Phase 1-6 items"
+      ],
+      "passes": true,
+      "notes": "Added loop/TASK_TRACKING.md with phase checklists and tasks."
     }
   ]
 }
