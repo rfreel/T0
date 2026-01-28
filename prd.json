@@ -12,6 +12,39 @@
       ],
       "passes": true,
       "notes": "Implemented loop center files, radius enforcement scripts, CI back-pressure, and pre-commit config."
+    },
+    {
+      "id": "DECIDE-001",
+      "title": "Document a closed-loop decision spec and verification gates",
+      "acceptance": [
+        "loop/LOOPSPEC.md defines the minimal loop contract fields",
+        "LoopSpec includes explicit verification gates and stop rules",
+        "Acceptance test describes required artifacts and verifier output"
+      ],
+      "passes": true,
+      "notes": "Documented LoopSpec with gates, budgets, and stop rules in loop/LOOPSPEC.md."
+    },
+    {
+      "id": "REPORT-001",
+      "title": "Provide an LLM planning report for GitHub work",
+      "acceptance": [
+        "loop/PLAN_REPORT.md summarizes repo goals, constraints, and loop contract",
+        "Report includes actionable planning steps and required artifacts",
+        "Report highlights risks and verification gates"
+      ],
+      "passes": true,
+      "notes": "Added loop/PLAN_REPORT.md to guide LLM planning with gates, risks, and artifacts."
+    },
+    {
+      "id": "REPORT-002",
+      "title": "Provide an LLM planning report for the GitHub loop master prompt",
+      "acceptance": [
+        "loop/GITHUB_PLAN_REPORT.md summarizes the prompt requirements and constraints",
+        "Report lists required files and verification checklist highlights",
+        "Report maps execution steps to the loop contract (precheck/postcheck)"
+      ],
+      "passes": true,
+      "notes": "Added loop/GITHUB_PLAN_REPORT.md with required files, steps, and verification highlights."
     }
   ]
 }

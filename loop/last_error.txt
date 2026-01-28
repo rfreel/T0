@@ -1,2 +1,1 @@
-# loop/last_error.txt
-# Latest failure output (the “error vector”).
+LLM_STUB: No model configured. Set B_CMD to your model binary.
