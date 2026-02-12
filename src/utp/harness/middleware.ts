@@ -2,7 +2,12 @@ import { appendFile } from 'node:fs/promises';
 import { ToolMiddleware } from './types.js';
 
 export const schemaValidationMiddleware = (): ToolMiddleware => ({
-  beforeCall: async (call) => call,
+  beforeCall: async (call) => {
+    if (typeof call.args !== 'object' || call.args === null) {
+      throw new Error('SchemaValidationError: tool args must be a JSON object.');
+    }
+    return call;
+  },
 });
 
 export const determinismMiddleware = (): ToolMiddleware => ({

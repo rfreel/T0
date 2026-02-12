@@ -1,3 +1,4 @@
+import { ZodError } from 'zod';
 import { err, ok, Result } from '../../types/result.js';
 import { Tool, ToolCall, ToolMiddleware, ToolResult } from './types.js';
 
@@ -27,6 +28,9 @@ export class ToolRegistry {
     return [...this.tools.keys()].sort();
   }
 }
+
+const zodMessage = (error: ZodError): string =>
+  error.issues.map((issue) => `${issue.path.join('.') || '<root>'}: ${issue.message}`).join('; ');
 
 export class Harness {
   public constructor(
@@ -60,10 +64,11 @@ export class Harness {
       }
       return ok(result);
     } catch (error) {
+      const schemaError = error instanceof ZodError ? `SchemaValidationError: ${zodMessage(error)}` : undefined;
       let result: ToolResult = {
         callId: currentCall.callId,
         ok: false,
-        error: error instanceof Error ? error.message : 'tool execution failed',
+        error: schemaError ?? (error instanceof Error ? error.message : 'tool execution failed'),
       };
       for (const handler of this.middleware) {
         if (handler.afterCall) {

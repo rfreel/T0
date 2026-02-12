@@ -6,6 +6,7 @@ export const requiredTools = () => ['artifact_renderer'];
 export type NativeCreatorInput = {
   request: PipelineInput;
   spec: MediumAgnosticSpec;
+  generatedAt: string;
 };
 
 export const runNativeCreator = async (input: NativeCreatorInput): Promise<Result<TargetArtifact, string>> => {
@@ -19,7 +20,7 @@ export const runNativeCreator = async (input: NativeCreatorInput): Promise<Resul
     metadata: {
       targetDomain: input.request.targetDomain,
       targetEnvironment: input.request.targetEnvironment,
-      generatedAt: new Date().toISOString(),
+      generatedAt: input.generatedAt,
     },
     buildHooks: ['pnpm typecheck', 'pnpm build'],
     runHooks: ['pnpm dev', 'pnpm utp:run --source examples/utp/prompt-stack/inputs/source.txt --source-domain prompt --target-domain prompt --target-env local'],

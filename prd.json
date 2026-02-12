@@ -112,6 +112,17 @@
       ],
       "passes": true,
       "notes": "Added src/utp portability package with pipeline, harness middleware, adapters, CLI, docs, examples, tests, utp.toml, and CI test jobs."
+    },
+    {
+      "id": "UTP-PORT-002",
+      "title": "Harden UTP determinism and schema validation error handling",
+      "acceptance": [
+        "Deterministic JSON artifact writer preserves nested keys and order",
+        "Harness returns actionable schema validation errors for invalid tool arguments",
+        "Pipeline uses a stable per-run timestamp passed to target artifact metadata"
+      ],
+      "passes": true,
+      "notes": "Implemented stable recursive serializer, improved validation errors, and unified run timestamp usage for generated artifact metadata."
     }
   ]
 }

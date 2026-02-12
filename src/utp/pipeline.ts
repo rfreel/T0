@@ -5,7 +5,7 @@ import { runDeconstructionist } from './phases/deconstructionist.js';
 import { runNativeCreator } from './phases/native_creator.js';
 import { runOntologist } from './phases/ontologist.js';
 import { runRealityAuditor } from './phases/reality_auditor.js';
-import { ensureDir, utcRunId, writeJsonDeterministic } from './utils/fs.js';
+import { ensureDir, writeJsonDeterministic } from './utils/fs.js';
 import { auditTrailMiddleware, determinismMiddleware, schemaValidationMiddleware } from './harness/middleware.js';
 import { Harness } from './harness/toolRegistry.js';
 import { createDefaultToolRegistry } from './tools.js';
@@ -39,7 +39,9 @@ export const run = async (
   }
   const input: PipelineInput = parsedInput.data;
 
-  const runDir = `${outRoot}/${utcRunId()}`;
+  const runStartedAt = new Date().toISOString();
+  const runId = runStartedAt.replace(/[:]/g, '-');
+  const runDir = `${outRoot}/${runId}`;
   await ensureDir(runDir);
   await writeJsonDeterministic(`${runDir}/inputs.json`, input);
   await event(runDir, 'run_started', { sourceDomain, targetDomain });
@@ -69,7 +71,7 @@ export const run = async (
 
   const phase3 = new Harness(registry.subset(['artifact_renderer']), common, 'phase3');
   await phase3.callTool({ toolName: 'artifact_renderer', args: { lines: ['portable_layer=enabled'] }, callId: '1' });
-  const artifact = await runNativeCreator({ request: input, spec: spec.value });
+  const artifact = await runNativeCreator({ request: input, spec: spec.value, generatedAt: runStartedAt });
   if (!artifact.ok) {
     return err(artifact.error);
   }
