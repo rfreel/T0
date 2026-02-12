@@ -75,6 +75,65 @@
       ],
       "passes": true,
       "notes": "Updated GitHub plan with autocommit zero-friction guidance and safeguards."
+    },
+    {
+      "id": "RLM-001",
+      "title": "Scaffold TypeScript RLM memory observability architecture",
+      "acceptance": [
+        "TypeScript strict Node.js project scaffolded with pnpm scripts",
+        "Three-tier RLM memory engine includes short-term buffer, observer loop, and reflector loop with context REPL",
+        "OpenTelemetry traces agent.generate, memory.observe, and tool.execute with required attributes",
+        "SQLite schema includes messages, observations, reflections, and traces tables",
+        "Demo entrypoint runs a simulated research agent conversation"
+      ],
+      "passes": true,
+      "notes": "Implemented src/core, src/memory, src/telemetry, and src/storage scaffold with Result-based async flows and env validation."
+    },
+    {
+      "id": "DECIDE-003",
+      "title": "Implement UTP as callable multi-agent pipeline",
+      "acceptance": [
+        "Callable agents exist for Structural_Analyst, Abstract_Specifier, Domain_Specialist, and Variance_Detector",
+        "Orchestrator emits exactly five ordered UTP sections",
+        "Audit includes conformance test pass/fail and discrepancy mapping with patch instructions"
+      ],
+      "passes": true,
+      "notes": "Added src/utp callable phase agents and orchestrator; entrypoint now prints UTP contract sections in order."
+    },
+    {
+      "id": "UTP-PORT-001",
+      "title": "Implement UTP portability layer with CLI, harness, adapters, and CI conformance gates",
+      "acceptance": [
+        "UTP core models and pipeline produce deterministic run artifacts in runs/<utc-iso>/",
+        "Tool harness supports schema validation, determinism, audit trail, and dynamic tool exposure",
+        "Four UTP phases have strict typed I/O and reality auditor emits discrepancies + patch instructions only",
+        "Raw and autogen adapters are available via UTP_ADAPTER switch",
+        "CLI/config/examples/tests/docs/CI conformance gating are added"
+      ],
+      "passes": true,
+      "notes": "Added src/utp portability package with pipeline, harness middleware, adapters, CLI, docs, examples, tests, utp.toml, and CI test jobs."
+    },
+    {
+      "id": "UTP-PORT-002",
+      "title": "Harden UTP determinism and schema validation error handling",
+      "acceptance": [
+        "Deterministic JSON artifact writer preserves nested keys and order",
+        "Harness returns actionable schema validation errors for invalid tool arguments",
+        "Pipeline uses a stable per-run timestamp passed to target artifact metadata"
+      ],
+      "passes": true,
+      "notes": "Implemented stable recursive serializer, improved validation errors, and unified run timestamp usage for generated artifact metadata."
+    },
+    {
+      "id": "UTP-PORT-003",
+      "title": "Unblock pnpm bootstrap by pinning to cached corepack version",
+      "acceptance": [
+        "packageManager uses a pnpm version available in local corepack cache",
+        "`pnpm --version` runs without fetching pnpm tarball from registry",
+        "Repository no longer fails at package-manager bootstrap stage"
+      ],
+      "passes": true,
+      "notes": "Updated packageManager from pnpm@10.0.0 to pnpm@10.23.0 so pnpm resolves locally from corepack cache."
     }
   ]
 }
