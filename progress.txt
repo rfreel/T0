@@ -20,3 +20,4 @@
 2026-02-11 | DECIDE-003 | complete | built UTP as callable four-phase agents with deterministic section contract
 2026-02-12 | UTP-PORT-001 | complete | implemented portable UTP layer with schemas, harness, adapters, CLI, examples, and CI gates
 2026-02-12 | UTP-PORT-002 | complete | fixed deterministic JSON serialization and improved schema validation errors in harness
+2026-02-12 | UTP-PORT-003 | complete | pinned packageManager to cached pnpm version to remove corepack bootstrap fetch failure

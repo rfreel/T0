@@ -123,6 +123,17 @@
       ],
       "passes": true,
       "notes": "Implemented stable recursive serializer, improved validation errors, and unified run timestamp usage for generated artifact metadata."
+    },
+    {
+      "id": "UTP-PORT-003",
+      "title": "Unblock pnpm bootstrap by pinning to cached corepack version",
+      "acceptance": [
+        "packageManager uses a pnpm version available in local corepack cache",
+        "`pnpm --version` runs without fetching pnpm tarball from registry",
+        "Repository no longer fails at package-manager bootstrap stage"
+      ],
+      "passes": true,
+      "notes": "Updated packageManager from pnpm@10.0.0 to pnpm@10.23.0 so pnpm resolves locally from corepack cache."
     }
   ]
 }
