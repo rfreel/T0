@@ -11,3 +11,7 @@ A) PR-only: push a branch and let CI enforce the tangent.
 B) Codespaces/local: run scripts/ralph/loop.sh to apply radius + pre-commit.
 
 To intentionally trigger failure: break prd.json or exceed 50 lines in loop/log.txt.
+
+## Checkpointing
+For each one-milestone cycle, update `IMPLEMENTATION_STATUS.md` after checks pass.
+Record acceptance criteria, commands run with exit status, short key outputs, and the next action before committing.
