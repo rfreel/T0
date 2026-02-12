@@ -1,24 +1,29 @@
-# UTP Callable-Agent Scaffold (TypeScript)
+# UTP Agent Portability Layer
 
-This repository now implements a **Universal Transpilation Protocol (UTP)** as a series of callable agents.
+TypeScript implementation of the Universal Transpilation Protocol (UTP) with strict schemas, deterministic run artifacts, and portable tool-harness adapters.
 
-## Pipeline
-- `Structural_Analyst`
-- `Abstract_Specifier`
-- `Domain_Specialist`
-- `Variance_Detector`
-
-Each phase is implemented as a callable agent module in `src/utp/` and orchestrated by `UtpOrchestrator`.
-
-## Run
+## 60-second first successful run
 ```bash
 pnpm install
-pnpm dev
+pnpm utp:run --source examples/utp/prompt-stack/inputs/source.txt --source-domain prompt-stack --target-domain prompt-stack --target-env local --out runs
+# copy printed run path, then:
+pnpm utp:audit --run runs/<utc-iso>
 ```
 
-The entrypoint prints exactly five ordered sections:
-1. `STRUCTURAL_LOGIC_MAP`
-2. `MEDIUM_AGNOSTIC_SPEC`
-3. `TARGET_ARTIFACT`
-4. `AUDIT_REPORT`
-5. `PATCH_INSTRUCTIONS`
+## Documentation
+- [UTP scope/non-goals](docs/utp/SCOPE.md)
+- [Architecture](docs/utp/ARCHITECTURE.md)
+- [Usage](docs/utp/USAGE.md)
+- [Schemas](docs/utp/SCHEMAS.md)
+- [Adding adapters](docs/utp/ADDING_ADAPTERS.md)
+- [Failure modes](docs/utp/FAILURE_MODES.md)
+
+## CLI entrypoints
+- `pnpm utp:run`
+- `pnpm utp:audit`
+- `pnpm utp:replay`
+
+## Testing
+- `pnpm test`
+- `pnpm test:integration`
+- `pnpm test:golden`

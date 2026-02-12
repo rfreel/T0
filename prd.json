@@ -99,6 +99,19 @@
       ],
       "passes": true,
       "notes": "Added src/utp callable phase agents and orchestrator; entrypoint now prints UTP contract sections in order."
+    },
+    {
+      "id": "UTP-PORT-001",
+      "title": "Implement UTP portability layer with CLI, harness, adapters, and CI conformance gates",
+      "acceptance": [
+        "UTP core models and pipeline produce deterministic run artifacts in runs/<utc-iso>/",
+        "Tool harness supports schema validation, determinism, audit trail, and dynamic tool exposure",
+        "Four UTP phases have strict typed I/O and reality auditor emits discrepancies + patch instructions only",
+        "Raw and autogen adapters are available via UTP_ADAPTER switch",
+        "CLI/config/examples/tests/docs/CI conformance gating are added"
+      ],
+      "passes": true,
+      "notes": "Added src/utp portability package with pipeline, harness middleware, adapters, CLI, docs, examples, tests, utp.toml, and CI test jobs."
     }
   ]
 }

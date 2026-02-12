@@ -1,0 +1,3 @@
+Build a deterministic UTP pipeline.
+When transitions are detected, map them to requirements.
+Emit artifacts and audit evidence.

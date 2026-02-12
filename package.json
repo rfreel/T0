@@ -11,7 +11,13 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "start": "node --enable-source-maps dist/main.js",
-    "dev": "tsx src/main.ts"
+    "dev": "tsx src/main.ts",
+    "test": "node --import tsx --test src/utp/__tests__/*.test.ts",
+    "test:integration": "bash scripts/utp/integration.sh",
+    "test:golden": "bash scripts/utp/golden_drift.sh",
+    "utp:run": "node --import tsx src/utp/cli.ts run",
+    "utp:audit": "node --import tsx src/utp/cli.ts audit",
+    "utp:replay": "node --import tsx src/utp/cli.ts replay"
   },
   "dependencies": {
     "@opentelemetry/api": "^1.9.0",
@@ -28,5 +34,8 @@
     "@types/node": "^22.13.5",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3"
+  },
+  "bin": {
+    "utp": "src/utp/cli.ts"
   }
 }
