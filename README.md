@@ -1,13 +1,24 @@
-# Canonical Loop Scaffold
+# UTP Callable-Agent Scaffold (TypeScript)
 
-Center = loop/ files, Radius = last 50 lines of loop/log.txt, Tangent = pre-commit + CI checks.
-Keep the loop small: only radius lines are in context.
-Back-pressure comes from pre-commit locally or CI remotely.
-The loop is bash-driven and stack-agnostic.
-When CI fails, capture the error vector in loop/last_error.txt.
+This repository now implements a **Universal Transpilation Protocol (UTP)** as a series of callable agents.
 
-## Usage
-A) PR-only: push a branch and let CI enforce the tangent.
-B) Codespaces/local: run scripts/ralph/loop.sh to apply radius + pre-commit.
+## Pipeline
+- `Structural_Analyst`
+- `Abstract_Specifier`
+- `Domain_Specialist`
+- `Variance_Detector`
 
-To intentionally trigger failure: break prd.json or exceed 50 lines in loop/log.txt.
+Each phase is implemented as a callable agent module in `src/utp/` and orchestrated by `UtpOrchestrator`.
+
+## Run
+```bash
+pnpm install
+pnpm dev
+```
+
+The entrypoint prints exactly five ordered sections:
+1. `STRUCTURAL_LOGIC_MAP`
+2. `MEDIUM_AGNOSTIC_SPEC`
+3. `TARGET_ARTIFACT`
+4. `AUDIT_REPORT`
+5. `PATCH_INSTRUCTIONS`

@@ -75,6 +75,30 @@
       ],
       "passes": true,
       "notes": "Updated GitHub plan with autocommit zero-friction guidance and safeguards."
+    },
+    {
+      "id": "RLM-001",
+      "title": "Scaffold TypeScript RLM memory observability architecture",
+      "acceptance": [
+        "TypeScript strict Node.js project scaffolded with pnpm scripts",
+        "Three-tier RLM memory engine includes short-term buffer, observer loop, and reflector loop with context REPL",
+        "OpenTelemetry traces agent.generate, memory.observe, and tool.execute with required attributes",
+        "SQLite schema includes messages, observations, reflections, and traces tables",
+        "Demo entrypoint runs a simulated research agent conversation"
+      ],
+      "passes": true,
+      "notes": "Implemented src/core, src/memory, src/telemetry, and src/storage scaffold with Result-based async flows and env validation."
+    },
+    {
+      "id": "DECIDE-003",
+      "title": "Implement UTP as callable multi-agent pipeline",
+      "acceptance": [
+        "Callable agents exist for Structural_Analyst, Abstract_Specifier, Domain_Specialist, and Variance_Detector",
+        "Orchestrator emits exactly five ordered UTP sections",
+        "Audit includes conformance test pass/fail and discrepancy mapping with patch instructions"
+      ],
+      "passes": true,
+      "notes": "Added src/utp callable phase agents and orchestrator; entrypoint now prints UTP contract sections in order."
     }
   ]
 }
