@@ -6,6 +6,7 @@ on:
     paths:
       - benchmark/run_public_benchmark.py
       - benchmark/run_public_benchmark_v2.py
+      - benchmark/run_public_benchmark_v3.py
       - .github/workflows/prompt-method-benchmark.yml
   workflow_dispatch:
 
@@ -37,28 +38,27 @@ jobs:
 
       - name: Pull frozen models
         run: |
-          ollama pull smollm2:360m-instruct-q4_K_M
-          ollama pull qwen2.5:0.5b-instruct-q4_K_M
+          ollama pull smollm2:1.7b-instruct-q4_K_M
+          ollama pull qwen2.5:1.5b-instruct-q4_K_M
 
       - name: Fetch public holdout benchmark
         run: git clone --depth 1 https://github.com/suzgunmirac/BIG-Bench-Hard.git /tmp/BIG-Bench-Hard
 
-      - name: Run benchmark
+      - name: Run constrained replication
         shell: bash
         env:
           BBH_DIR: /tmp/BIG-Bench-Hard/bbh
           OUT_DIR: benchmark_results
-          MODELS: smollm2:360m-instruct-q4_K_M,qwen2.5:0.5b-instruct-q4_K_M
         run: |
           set -o pipefail
           mkdir -p benchmark_results
-          python3 benchmark/run_public_benchmark_v2.py 2>&1 | tee benchmark_results/run.log
+          python3 benchmark/run_public_benchmark_v3.py 2>&1 | tee benchmark_results/run.log
 
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: prompt-method-benchmark-results
+          name: prompt-method-benchmark-constrained-results
           path: benchmark_results/
           if-no-files-found: warn
           retention-days: 7
