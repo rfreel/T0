@@ -43,11 +43,15 @@ jobs:
         run: git clone --depth 1 https://github.com/suzgunmirac/BIG-Bench-Hard.git /tmp/BIG-Bench-Hard
 
       - name: Run benchmark
+        shell: bash
         env:
           BBH_DIR: /tmp/BIG-Bench-Hard/bbh
           OUT_DIR: benchmark_results
           MODELS: smollm2:135m-instruct-q3_K_M,qwen2.5:0.5b-instruct-q4_K_M
-        run: python3 benchmark/run_public_benchmark.py
+        run: |
+          set -o pipefail
+          mkdir -p benchmark_results
+          python3 benchmark/run_public_benchmark.py 2>&1 | tee benchmark_results/run.log
 
       - name: Upload results
         if: always()
