@@ -8,6 +8,12 @@ on:
     paths:
       - .github/workflows/pufferlib-cpu-smoke.yml
       - experiments/pufferlib/**
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/pufferlib-cpu-smoke.yml
+      - experiments/pufferlib/**
 
 permissions:
   contents: read
