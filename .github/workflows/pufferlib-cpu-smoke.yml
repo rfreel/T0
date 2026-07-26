@@ -1,0 +1,71 @@
+name: PufferLib CPU smoke training
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - experiments/pufferlib-cpu-20260725
+    paths:
+      - .github/workflows/pufferlib-cpu-smoke.yml
+      - experiments/pufferlib/**
+
+permissions:
+  contents: read
+
+jobs:
+  train:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out execution branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install native build dependencies
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update
+          sudo apt-get install -y \
+            clang ccache libomp-dev libgl1-mesa-dev \
+            libx11-dev libxrandr-dev libxi-dev libxcursor-dev libxinerama-dev \
+            unzip
+
+          # PufferLib's Linux build script links -lomp5. Ubuntu exposes libomp.so.5;
+          # provide the exact linker name without modifying the upstream source.
+          omp_path="$(ldconfig -p | awk '/libomp\.so\.5/{print $NF; exit}')"
+          test -n "$omp_path"
+          sudo ln -sf "$omp_path" /usr/local/lib/libomp5.so
+          sudo ldconfig
+
+      - name: Build and train PufferLib
+        run: bash experiments/pufferlib/run_cpu_smoke.sh
+
+      - name: Publish run summary
+        if: always()
+        run: |
+          {
+            echo '## PufferLib CPU training'
+            echo
+            if test -f pufferlib-results/summary.json; then
+              echo '```json'
+              cat pufferlib-results/summary.json
+              echo '```'
+            else
+              echo 'Training did not produce a verified summary. Inspect the uploaded log.'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload training evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pufferlib-cpu-training
+          path: pufferlib-results/
+          if-no-files-found: warn
+          retention-days: 14
