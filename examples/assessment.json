@@ -1,0 +1,11 @@
+{
+  "actual_observation": "Latency fell from ten days to four.",
+  "actual_value": 4,
+  "verdict": "SUCCESS",
+  "unintended_effects": "No safety violations observed.",
+  "actual_cost": "Three operator-hours.",
+  "delay": "No implementation delay.",
+  "causal_confidence": 0.8,
+  "transferred": "The bounded-commit gate transferred to a second decision.",
+  "failed": "No component failure observed."
+}
