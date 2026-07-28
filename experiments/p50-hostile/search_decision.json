@@ -1,0 +1,14 @@
+{
+  "benchmark_quality": {
+    "full_scaffold_not_dominant": true,
+    "null_gain_below_0_03": true
+  },
+  "original_P50_global_unlock": "NOT_SUPPORTED",
+  "conditional_P50": "SUPPORTED",
+  "global_gain_sealed_iid": 0.04867929220199585,
+  "global_gain_sealed_shift": 0.05719351768493652,
+  "conditional_gain_over_global_iid": 0.09428136050701141,
+  "conditional_gain_over_global_shift": 0.08056798577308655,
+  "full_minus_global_iid": -0.13435772061347961,
+  "null_best_gain": 0.0013227462768554688
+}
