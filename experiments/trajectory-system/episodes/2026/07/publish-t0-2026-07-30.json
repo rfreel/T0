@@ -22,18 +22,19 @@
     "stopping_boundary": "remote publication verified; no merge"
   },
   "expected_result": {
-    "changed_files": 49,
+    "changed_files": 50,
     "all_changes_under": "experiments/trajectory-system/",
     "draft_pull_request": true,
     "main_unchanged": true
   },
   "observed_result": {
     "status": "published to draft PR",
-    "changed_files": 49,
+    "changed_files": 50,
     "all_changed_files_namespaced": true,
     "skills_materialized": 27,
     "base_sha": "9a855b13ba4d0340265d57a5fc6d1b132e792c07",
     "materialized_commit": "d1645a8f0116f7e8c161d72209b24d472de7d551",
+    "verification_record_commit": "94fd088fe8946684ce10d260b1db8beeaa344e75",
     "draft": true,
     "merged": false
   },
@@ -57,6 +58,7 @@
   "user_judgment": null,
   "trace_locations": [
     "https://github.com/rfreel/T0/pull/46",
-    "https://github.com/rfreel/T0/commit/d1645a8f0116f7e8c161d72209b24d472de7d551"
+    "https://github.com/rfreel/T0/commit/d1645a8f0116f7e8c161d72209b24d472de7d551",
+    "https://github.com/rfreel/T0/commit/94fd088fe8946684ce10d260b1db8beeaa344e75"
   ]
 }

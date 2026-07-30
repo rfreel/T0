@@ -35,6 +35,7 @@
     "remote_target": "rfreel/T0/experiments/trajectory-system",
     "main_commit_observed": "9a855b13ba4d0340265d57a5fc6d1b132e792c07",
     "materialized_commit": "d1645a8f0116f7e8c161d72209b24d472de7d551",
+    "verification_record_commit": "94fd088fe8946684ce10d260b1db8beeaa344e75",
     "draft_pull_request_url": "https://github.com/rfreel/T0/pull/46"
   },
   "material_rivals": [
@@ -60,13 +61,13 @@
   "verification": {
     "failure_mechanism": "wrong repository, wrong path, missing files, altered T0 main, non-draft publication, or source hash drift",
     "verifier": "GitHub branch comparison, PR file enumeration, fetched control files, and hash-gated source materialization",
-    "acceptance_condition": "49 files appear under the namespace, 27 skill hashes pass, the PR is draft, and main remains at the observed base commit",
+    "acceptance_condition": "50 files appear under the namespace, 27 skill hashes pass, the PR is draft, and main remains at the observed base commit",
     "result": {
       "status": "PASS",
       "pull_request": 46,
       "draft": true,
       "merged": false,
-      "changed_files": 49,
+      "changed_files": 50,
       "all_changed_files_namespaced": true,
       "base_sha": "9a855b13ba4d0340265d57a5fc6d1b132e792c07",
       "materialized_head_sha": "d1645a8f0116f7e8c161d72209b24d472de7d551",
@@ -76,7 +77,7 @@
     }
   },
   "recovery": {
-    "checkpoint": "draft PR 46 at materialized commit d1645a8f0116f7e8c161d72209b24d472de7d551",
+    "checkpoint": "draft PR 46 with materialized sources and verification record",
     "rollback": "close draft PR 46 and delete agent/trajectory-system-bootstrap; main remains unchanged",
     "resumable_from": "experiments/trajectory-system/state/ACTIVE_TRAJECTORY.json"
   },
