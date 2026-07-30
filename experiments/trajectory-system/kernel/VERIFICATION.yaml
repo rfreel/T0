@@ -1,0 +1,8 @@
+schema_version: 1
+claim_verifiers:
+  file_content: hash_and_refetch
+  schema_validity: deterministic_validator
+  code_behavior: executable_test
+  deployment: provider_state_and_external_probe
+  user_preference: user_judgment
+  research_currency: dated_primary_sources

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "episode_id",
+    "trajectory_id",
+    "objective",
+    "environment",
+    "action",
+    "observed_result",
+    "verifier_result",
+    "trace_locations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "episode_id": {
+      "type": "string"
+    },
+    "trajectory_id": {
+      "type": "string"
+    },
+    "objective": {
+      "type": "string"
+    },
+    "environment": {
+      "type": "object"
+    },
+    "action": {
+      "type": "object"
+    },
+    "observed_result": {
+      "type": "object"
+    },
+    "verifier_result": {
+      "type": "object"
+    },
+    "trace_locations": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

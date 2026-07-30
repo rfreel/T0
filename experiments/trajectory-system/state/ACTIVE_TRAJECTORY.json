@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "trajectory_id": "bootstrap-2026-07-30",
+  "objective": "Place the verified trajectory-system bootstrap in a namespaced experiment inside rfreel/T0 without changing T0 main.",
+  "authority": {
+    "granted": [
+      "read rfreel/T0",
+      "create dedicated feature branch in rfreel/T0",
+      "write the trajectory system under experiments/trajectory-system",
+      "open a draft pull request against main",
+      "verify remote files and pull request state"
+    ],
+    "withheld": [
+      "merge pull request",
+      "modify main directly",
+      "deploy or release",
+      "change secrets or billing",
+      "delete repository or unrelated files"
+    ]
+  },
+  "environment": {
+    "identity": "GitHub account rfreel through connected GitHub app",
+    "workspace": "rfreel/T0/experiments/trajectory-system",
+    "repository": "rfreel/T0",
+    "branch": "agent/trajectory-system-bootstrap",
+    "external_services": [
+      "GitHub"
+    ]
+  },
+  "current_state": {
+    "source_archive": "/mnt/data/jeffrey-public-skills-pack-2026-07-29.zip",
+    "source_skills": 27,
+    "local_source_commit": "457909b1a8df0cf184a739041ee0b25171d53528",
+    "remote_target": "rfreel/T0/experiments/trajectory-system",
+    "main_commit_observed": "9a855b13ba4d0340265d57a5fc6d1b132e792c07"
+  },
+  "material_rivals": [
+    {
+      "hypothesis": "A compact repository scaffold is sufficient to reconstruct and resume work.",
+      "action_difference": "Run one local trial before adding automation."
+    },
+    {
+      "hypothesis": "The scaffold creates more coordination cost than it removes.",
+      "action_difference": "Abandon or shrink fields after trial evidence."
+    }
+  ],
+  "next_decision": {
+    "observation": "Does the dedicated GitHub branch contain the complete namespaced system and expose it through a draft PR while main remains unchanged?",
+    "collection_method": "compare main to branch, enumerate PR files, fetch control files, and inspect commit status"
+  },
+  "selected_action": {
+    "action": "publish the bootstrap under experiments/trajectory-system on a dedicated branch and open a draft PR",
+    "reversibility": "close the draft PR and delete the feature branch",
+    "expected_effect": "durable, inspectable GitHub home with T0 root behavior unchanged",
+    "stopping_boundary": "stop after remote verification; do not merge"
+  },
+  "verification": {
+    "failure_mechanism": "wrong repository, wrong path, missing files, altered T0 main, or non-draft publication",
+    "verifier": "GitHub branch comparison, PR file enumeration, fetched control files, and commit status",
+    "acceptance_condition": "all local files appear under the namespace, control content matches, PR is draft, and main remains at the observed base commit",
+    "result": {
+      "status": "PENDING"
+    }
+  },
+  "recovery": {
+    "checkpoint": "local commit before GitHub publication",
+    "rollback": "close draft PR and delete agent/trajectory-system-bootstrap",
+    "resumable_from": "state/ACTIVE_TRAJECTORY.json"
+  },
+  "status": "authorized"
+}
