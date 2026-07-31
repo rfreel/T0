@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "decisions": [
+    {"service_id": "notes", "option_id": "notes_current"},
+    {"service_id": "cloud_storage", "option_id": "cloud_current"},
+    {"service_id": "automation", "option_id": "automation_current"}
+  ]
+}
