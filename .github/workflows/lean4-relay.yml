@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   relay:
-    if: github.head_ref == 'agent/lean4-transport'
+    if: startsWith(github.head_ref, 'agent/lean4-')
     runs-on: ubuntu-latest
     steps:
       - name: Fetch and verify Lean 4.31.0 Linux
