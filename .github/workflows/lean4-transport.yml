@@ -45,3 +45,5 @@ jobs:
         with:
           name: lean4-checksums
           path: SHA256SUMS.parts
+
+# PR synchronize trigger for transport retrieval
