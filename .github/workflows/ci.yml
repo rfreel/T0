@@ -39,3 +39,35 @@ jobs:
           python -m pip install --upgrade pip
           pip install pre-commit
           pre-commit run --all-files
+
+  angr-wheelhouse:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Build exact angr 9.3.3 wheelhouse
+        run: |
+          set -euxo pipefail
+          python -m pip install --upgrade pip wheel
+          mkdir -p wheelhouse
+          python -m pip wheel --wheel-dir wheelhouse 'angr==9.3.3'
+          python -m venv verify-env
+          verify-env/bin/python -m pip install --no-index --find-links wheelhouse 'angr==9.3.3'
+          verify-env/bin/python - <<'PY'
+          import angr, claripy, pyvex, archinfo, cle
+          print('angr', angr.__version__)
+          assert angr.__version__ == '9.3.3'
+          x = claripy.BVS('x', 8)
+          s = claripy.Solver()
+          s.add(x == 42)
+          assert s.eval(x, 1)[0] == 42
+          print('ANGR_WHEELHOUSE_OK')
+          PY
+          sha256sum wheelhouse/* > wheelhouse/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: angr-9.3.3-wheelhouse-linux-x86_64-py313
+          path: wheelhouse/
+          if-no-files-found: error
+          retention-days: 1
