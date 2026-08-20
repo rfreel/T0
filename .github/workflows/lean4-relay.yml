@@ -1,0 +1,42 @@
+name: Lean4 Relay
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  relay:
+    if: github.head_ref == 'agent/lean4-transport'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch and verify Lean 4.31.0 Linux
+        run: |
+          set -euxo pipefail
+          curl -L --fail --retry 3 -o lean-4.31.0-linux.tar.zst \
+            https://github.com/leanprover/lean4/releases/download/v4.31.0/lean-4.31.0-linux.tar.zst
+          echo '07a633cc8d9151cbc08825ea4cdda50d4b02a2c9cb852c0131b13046f49cad7f  lean-4.31.0-linux.tar.zst' | sha256sum -c -
+          split -b 240M -d -a 2 lean-4.31.0-linux.tar.zst lean4.part.
+          sha256sum lean4.part.* > SHA256SUMS.parts
+          ls -lh lean4.part.* SHA256SUMS.parts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lean4-part-00
+          path: lean4.part.00
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lean4-part-01
+          path: lean4.part.01
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lean4-part-02
+          path: lean4.part.02
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lean4-checksums
+          path: SHA256SUMS.parts
