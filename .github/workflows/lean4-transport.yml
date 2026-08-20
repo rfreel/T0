@@ -1,0 +1,47 @@
+name: lean4-transport
+
+on:
+  push:
+    branches: [agent/lean4-transport]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-split:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Lean 4.31.0 Linux release
+        run: |
+          set -euxo pipefail
+          curl -L --fail --retry 3 -o lean-4.31.0-linux.tar.zst \
+            https://github.com/leanprover/lean4/releases/download/v4.31.0/lean-4.31.0-linux.tar.zst
+          echo '07a633cc8d9151cbc08825ea4cdda50d4b02a2c9cb852c0131b13046f49cad7f  lean-4.31.0-linux.tar.zst' | sha256sum -c -
+          split -b 240M -d -a 2 lean-4.31.0-linux.tar.zst lean4.part.
+          ls -lh lean4.part.*
+          sha256sum lean4.part.* > SHA256SUMS.parts
+      - name: Upload part 00
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean4-part-00
+          path: lean4.part.00
+          compression-level: 0
+      - name: Upload part 01
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean4-part-01
+          path: lean4.part.01
+          compression-level: 0
+      - name: Upload part 02
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean4-part-02
+          path: lean4.part.02
+          compression-level: 0
+      - name: Upload checksums
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean4-checksums
+          path: SHA256SUMS.parts
