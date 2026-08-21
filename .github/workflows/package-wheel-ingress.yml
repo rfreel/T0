@@ -6,6 +6,11 @@ on:
       - agent/package-wheel-ingress-20260820
     paths:
       - .github/workflows/package-wheel-ingress.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/package-wheel-ingress.yml
   workflow_dispatch:
 
 permissions:
