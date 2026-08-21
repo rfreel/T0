@@ -88,4 +88,4 @@ jobs:
           name: package-${{ matrix.name }}-py313-linux-x64
           path: bundle
           if-no-files-found: error
-          retention-days: 14
+          retention-days: 7
