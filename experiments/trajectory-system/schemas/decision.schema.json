@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "decision_id",
+    "trajectory_id",
+    "observation",
+    "alternatives",
+    "selection",
+    "evidence"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "decision_id": {
+      "type": "string"
+    },
+    "trajectory_id": {
+      "type": "string"
+    },
+    "observation": {
+      "type": "string"
+    },
+    "alternatives": {
+      "type": "array",
+      "minItems": 2
+    },
+    "selection": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

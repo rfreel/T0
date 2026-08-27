@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "procedure": {
+    "id": "promote-procedure",
+    "purpose": "Promote a candidate lesson only after provenance, counterevidence, environment, and verifier gates pass."
+  },
+  "source": {
+    "skill": "cm",
+    "path": "skills/upstream/cm/SKILL.md"
+  },
+  "triggering_conditions": [
+    "candidate procedure exists",
+    "new verified episode recorded"
+  ],
+  "prohibited_conditions": [
+    "self-certification by generating agent",
+    "missing counterevidence field"
+  ],
+  "required_inputs": [
+    "candidate procedure",
+    "supporting episodes",
+    "counterevidence"
+  ],
+  "inspected_preconditions": [
+    "environment tags present",
+    "verifier results present"
+  ],
+  "proposed_transition": {
+    "from": "candidate lesson",
+    "to": "active, quarantined, or retained candidate procedure"
+  },
+  "authority_class": "repository_write_after_gate",
+  "execution_steps": [
+    "validate evidence independence",
+    "compare material rival explanations",
+    "check support threshold",
+    "set review trigger",
+    "move status directory"
+  ],
+  "expected_effect": "Only bounded and inspectably supported lessons enter active retrieval.",
+  "verifier": {
+    "mechanism": "deterministic_gate",
+    "acceptance": [
+      "two distinct successful episodes or one deterministic mechanism test",
+      "counterevidence field present",
+      "review trigger present"
+    ]
+  },
+  "rollback": {
+    "method": "revert promotion commit and restore candidate status",
+    "irreversible": false
+  },
+  "emitted_trace": [
+    "decision record",
+    "verifier result"
+  ],
+  "known_failure_modes": [
+    "confounded success attribution",
+    "environment overgeneralization",
+    "recursive self-approval"
+  ],
+  "confidence": 0.72,
+  "status": "candidate",
+  "review_trigger": "after first end-to-end trial"
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "episode_id": "publish-t0-draft-pr",
+  "trajectory_id": "bootstrap-2026-07-30",
+  "objective": "Give the trajectory system a durable, reversible home in rfreel/T0 without changing main.",
+  "environment": {
+    "identity": "GitHub account rfreel through connected GitHub app",
+    "repository": "rfreel/T0",
+    "branch": "agent/trajectory-system-bootstrap",
+    "target_path": "experiments/trajectory-system",
+    "pull_request": 46
+  },
+  "retrieved_procedures": [
+    "planning-observation-boundary",
+    "authorize-exact-action",
+    "index-raw-trace"
+  ],
+  "action": {
+    "action": "create a namespaced branch, materialize the 27 hash-pinned public skill sources, and open a draft PR",
+    "reversibility": "close PR 46 and delete the feature branch",
+    "expected_effect": "durable GitHub state with no modification to main",
+    "stopping_boundary": "remote publication verified; no merge"
+  },
+  "expected_result": {
+    "changed_files": 50,
+    "all_changes_under": "experiments/trajectory-system/",
+    "draft_pull_request": true,
+    "main_unchanged": true
+  },
+  "observed_result": {
+    "status": "published to draft PR",
+    "changed_files": 50,
+    "all_changed_files_namespaced": true,
+    "skills_materialized": 27,
+    "base_sha": "9a855b13ba4d0340265d57a5fc6d1b132e792c07",
+    "materialized_commit": "d1645a8f0116f7e8c161d72209b24d472de7d551",
+    "verification_record_commit": "94fd088fe8946684ce10d260b1db8beeaa344e75",
+    "draft": true,
+    "merged": false
+  },
+  "verifier_result": {
+    "status": "PASS",
+    "methods": [
+      "compare main and branch",
+      "enumerate all PR filenames",
+      "fetch materialized skill and control files",
+      "confirm temporary workflow removal",
+      "confirm PR draft state"
+    ],
+    "status_checks": "none configured or reported"
+  },
+  "divergence": "Repository creation was unavailable, so the system was placed in T0 as a namespaced experiment instead.",
+  "causal_alternatives": [
+    "leave the system only in the local runtime",
+    "place it at T0 root and risk interference",
+    "publish a compressed archive rather than inspectable source"
+  ],
+  "user_judgment": null,
+  "trace_locations": [
+    "https://github.com/rfreel/T0/pull/46",
+    "https://github.com/rfreel/T0/commit/d1645a8f0116f7e8c161d72209b24d472de7d551",
+    "https://github.com/rfreel/T0/commit/94fd088fe8946684ce10d260b1db8beeaa344e75"
+  ]
+}
