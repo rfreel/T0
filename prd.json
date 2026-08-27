@@ -75,6 +75,17 @@
       ],
       "passes": true,
       "notes": "Updated GitHub plan with autocommit zero-friction guidance and safeguards."
+    },
+    {
+      "id": "STATUS-001",
+      "title": "Add checkpoint ledger for one-milestone loop cycles",
+      "acceptance": [
+        "IMPLEMENTATION_STATUS.md exists with cycle checkpoint schema",
+        "At least one completed cycle entry includes commands and exit codes",
+        "README references checkpoint updates as part of the operating loop"
+      ],
+      "passes": true,
+      "notes": "Added IMPLEMENTATION_STATUS.md with checkpoint schema and completed cycle entry; documented status ledger usage in README."
     }
   ]
 }
