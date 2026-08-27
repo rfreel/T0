@@ -1,0 +1,4 @@
+{
+  "golden": "placeholder-spec",
+  "note": "Generated spec.json from run should match semantically; used for drift checks."
+}

@@ -1,0 +1,3 @@
+Define tool contract portability.
+If adapter changes, keep schema validation stable.
+Audit discrepancies must map to requirements and tests.

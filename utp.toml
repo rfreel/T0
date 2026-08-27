@@ -1,0 +1,13 @@
+[adapter]
+default = "raw"
+
+[model]
+provider = "openai"
+name = "gpt-4o-mini"
+
+[determinism]
+seed = 7
+max_retries = 1
+
+[evidence]
+patterns = ["runs/*/run.ndjson", "runs/*/audit_report.json"]
