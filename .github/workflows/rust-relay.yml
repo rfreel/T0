@@ -17,28 +17,30 @@ jobs:
         run: |
           set -euxo pipefail
           uname -a
-          ldd --version | head -1
           rustc --version --verbose
-          cargo --version
           rustc --print sysroot
 
-      - name: Pack Rust sysroot fast
+      - name: Pack minimal rustc toolchain
         shell: bash
         run: |
           set -euxo pipefail
           SYSROOT="$(rustc --print sysroot)"
-          BASE="$(dirname "$SYSROOT")"
-          NAME="$(basename "$SYSROOT")"
-          tar -C "$BASE" -cf - "$NAME" | zstd -T0 -1 -o rust-toolchain-x86_64-linux.tar.zst
-          sha256sum rust-toolchain-x86_64-linux.tar.zst | tee rust-toolchain-x86_64-linux.tar.zst.sha256
-          du -h rust-toolchain-x86_64-linux.tar.zst
+          HOST="$(rustc -vV | sed -n 's/^host: //p')"
+          mkdir -p rust-min/bin rust-min/lib/rustlib/$HOST
+          cp "$SYSROOT/bin/rustc" rust-min/bin/
+          cp -a "$SYSROOT/lib/"librustc_driver-* rust-min/lib/
+          cp -a "$SYSROOT/lib/rustlib/$HOST/lib" rust-min/lib/rustlib/$HOST/
+          if [ -d "$SYSROOT/lib/rustlib/$HOST/bin" ]; then cp -a "$SYSROOT/lib/rustlib/$HOST/bin" rust-min/lib/rustlib/$HOST/; fi
+          tar -cf - rust-min | zstd -T0 -1 -o rust-min-x86_64-linux.tar.zst
+          sha256sum rust-min-x86_64-linux.tar.zst | tee rust-min-x86_64-linux.tar.zst.sha256
+          du -sh rust-min rust-min-x86_64-linux.tar.zst
 
-      - name: Upload Rust toolchain
+      - name: Upload minimal Rust toolchain
         uses: actions/upload-artifact@v4
         with:
-          name: rust-toolchain-x86_64-linux-zst
+          name: rust-min-x86_64-linux-zst
           path: |
-            rust-toolchain-x86_64-linux.tar.zst
-            rust-toolchain-x86_64-linux.tar.zst.sha256
+            rust-min-x86_64-linux.tar.zst
+            rust-min-x86_64-linux.tar.zst.sha256
           compression-level: 0
           retention-days: 1
