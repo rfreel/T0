@@ -1,0 +1,44 @@
+name: Rust toolchain relay
+
+on:
+  push:
+    branches:
+      - tmp/rust-relay-20260901
+
+permissions:
+  contents: read
+
+jobs:
+  pack-rust:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Inspect preinstalled Rust
+        shell: bash
+        run: |
+          set -euxo pipefail
+          uname -a
+          ldd --version | head -1
+          rustc --version --verbose
+          cargo --version
+          rustc --print sysroot
+
+      - name: Pack Rust sysroot
+        shell: bash
+        run: |
+          set -euxo pipefail
+          SYSROOT="$(rustc --print sysroot)"
+          BASE="$(dirname "$SYSROOT")"
+          NAME="$(basename "$SYSROOT")"
+          tar -C "$BASE" -cJf rust-toolchain-x86_64-linux.tar.xz "$NAME"
+          sha256sum rust-toolchain-x86_64-linux.tar.xz | tee rust-toolchain-x86_64-linux.tar.xz.sha256
+          du -h rust-toolchain-x86_64-linux.tar.xz
+
+      - name: Upload Rust toolchain
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-toolchain-x86_64-linux
+          path: |
+            rust-toolchain-x86_64-linux.tar.xz
+            rust-toolchain-x86_64-linux.tar.xz.sha256
+          compression-level: 0
+          retention-days: 1
