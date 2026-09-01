@@ -22,23 +22,23 @@ jobs:
           cargo --version
           rustc --print sysroot
 
-      - name: Pack Rust sysroot
+      - name: Pack Rust sysroot fast
         shell: bash
         run: |
           set -euxo pipefail
           SYSROOT="$(rustc --print sysroot)"
           BASE="$(dirname "$SYSROOT")"
           NAME="$(basename "$SYSROOT")"
-          tar -C "$BASE" -cJf rust-toolchain-x86_64-linux.tar.xz "$NAME"
-          sha256sum rust-toolchain-x86_64-linux.tar.xz | tee rust-toolchain-x86_64-linux.tar.xz.sha256
-          du -h rust-toolchain-x86_64-linux.tar.xz
+          tar -C "$BASE" -cf - "$NAME" | zstd -T0 -1 -o rust-toolchain-x86_64-linux.tar.zst
+          sha256sum rust-toolchain-x86_64-linux.tar.zst | tee rust-toolchain-x86_64-linux.tar.zst.sha256
+          du -h rust-toolchain-x86_64-linux.tar.zst
 
       - name: Upload Rust toolchain
         uses: actions/upload-artifact@v4
         with:
-          name: rust-toolchain-x86_64-linux
+          name: rust-toolchain-x86_64-linux-zst
           path: |
-            rust-toolchain-x86_64-linux.tar.xz
-            rust-toolchain-x86_64-linux.tar.xz.sha256
+            rust-toolchain-x86_64-linux.tar.zst
+            rust-toolchain-x86_64-linux.tar.zst.sha256
           compression-level: 0
           retention-days: 1
