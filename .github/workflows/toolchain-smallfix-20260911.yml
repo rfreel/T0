@@ -45,7 +45,7 @@ jobs:
           download_latest koalaman/shellcheck '^shellcheck-v.*[.]linux[.]x86_64[.]tar[.]xz$' shellcheck
           download_latest mvdan/sh '^shfmt_v.*_linux_amd64$' shfmt
           download_latest git-lfs/git-lfs '^git-lfs-linux-amd64-v.*[.]tar[.]gz$' git-lfs
-          download_latest rhysd/actionlint '^actionlint_.*_linux_x86_64[.]tar[.]gz$' actionlint
+          download_latest rhysd/actionlint '^actionlint_.*_linux_amd64[.]tar[.]gz$' actionlint
 
           cvc5_json="$(gh api repos/cvc5/cvc5/releases/latest)"
           cvc5_url="$(jq -r '[.assets[] | select(.name | test("Linux.*x86_64.*static.*[.](zip|tar[.]gz)$"; "i"))][0].browser_download_url // empty' <<<"$cvc5_json")"
