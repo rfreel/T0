@@ -1,0 +1,126 @@
+name: Toolchain Smuggler 20260911
+
+on:
+  push:
+    branches:
+      - agent/toolchain-smuggler-20260911-2145
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  small-tools:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch immutable/release tool artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p out/sources out/meta
+
+          download_latest() {
+            local repo="$1" regex="$2" label="$3"
+            local json url name tag
+            json="$(gh api "repos/${repo}/releases/latest")"
+            tag="$(jq -r '.tag_name' <<<"$json")"
+            url="$(jq -r --arg re "$regex" '.assets[] | select(.name | test($re)) | .browser_download_url' <<<"$json" | head -n1)"
+            if [[ -z "$url" || "$url" == "null" ]]; then
+              echo "No asset in ${repo} matching ${regex}" >&2
+              gh api "repos/${repo}/releases/latest" --jq '.assets[].name' >&2
+              exit 20
+            fi
+            name="$(basename "$url")"
+            echo "${label}: ${repo} ${tag} ${name}" | tee -a out/meta/versions.txt
+            curl --fail --location --retry 4 --retry-all-errors "$url" -o "out/sources/${label}--${name}"
+          }
+
+          download_latest leanprover/elan '^elan-x86_64-unknown-linux-gnu[.]tar[.]gz$' elan
+          download_latest cli/cli '^gh_[0-9.]+_linux_amd64[.]tar[.]gz$' gh
+          download_latest casey/just '^just-.*-x86_64-unknown-linux-musl[.]tar[.]gz$' just
+          download_latest pnpm/pnpm '^pnpm-linux-x64$' pnpm
+          download_latest koalaman/shellcheck '^shellcheck-v.*[.]linux[.]x86_64[.]tar[.]xz$' shellcheck
+          download_latest mvdan/sh '^shfmt_v.*_linux_amd64$' shfmt
+          download_latest git-lfs/git-lfs '^git-lfs-linux-amd64-v.*[.]tar[.]gz$' git-lfs
+          download_latest rhysd/actionlint '^actionlint_.*_linux_x86_64[.]tar[.]gz$' actionlint
+
+          # Prefer a static cvc5 Linux x86_64 build; fall back to any Linux x86_64 archive.
+          cvc5_json="$(gh api repos/cvc5/cvc5/releases/latest)"
+          cvc5_url="$(jq -r '[.assets[] | select(.name | test("Linux.*x86_64.*static.*[.](zip|tar[.]gz)$"; "i"))][0].browser_download_url // empty' <<<"$cvc5_json")"
+          if [[ -z "$cvc5_url" ]]; then
+            cvc5_url="$(jq -r '[.assets[] | select(.name | test("Linux.*x86_64.*[.](zip|tar[.]gz)$"; "i"))][0].browser_download_url // empty' <<<"$cvc5_json")"
+          fi
+          if [[ -z "$cvc5_url" ]]; then
+            echo 'No cvc5 Linux x86_64 release archive found' >&2
+            jq -r '.assets[].name' <<<"$cvc5_json" >&2
+            exit 21
+          fi
+          cvc5_name="$(basename "$cvc5_url")"
+          echo "cvc5: cvc5/cvc5 $(jq -r '.tag_name' <<<"$cvc5_json") ${cvc5_name}" | tee -a out/meta/versions.txt
+          curl --fail --location --retry 4 --retry-all-errors "$cvc5_url" -o "out/sources/cvc5--${cvc5_name}"
+
+          # rustup's canonical bootstrap binary.  No toolchain is downloaded here.
+          curl --fail --location --retry 4 --retry-all-errors \
+            https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init \
+            -o out/sources/rustup-init-x86_64-unknown-linux-gnu
+          chmod +x out/sources/rustup-init-x86_64-unknown-linux-gnu
+          ./out/sources/rustup-init-x86_64-unknown-linux-gnu --version | tee -a out/meta/versions.txt
+
+          sha256sum out/sources/* | sort > out/meta/SHA256SUMS
+          printf 'runner=%s\narch=%s\n' "$(uname -a)" "$(uname -m)" > out/meta/platform.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: toolchain-small-linux-x86_64
+          path: out
+          if-no-files-found: error
+          compression-level: 0
+
+  verus:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch latest Verus Linux x86 release
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          json="$(gh api repos/verus-lang/verus/releases/latest)"
+          url="$(jq -r '[.assets[] | select(.name | test("-x86-linux[.]zip$"))][0].browser_download_url // empty' <<<"$json")"
+          [[ -n "$url" ]] || { jq -r '.assets[].name' <<<"$json" >&2; exit 30; }
+          name="$(basename "$url")"
+          curl --fail --location --retry 4 --retry-all-errors "$url" -o "out/$name"
+          jq -r '.tag_name' <<<"$json" > out/VERSION.txt
+          sha256sum "out/$name" > out/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: toolchain-verus-linux-x86_64
+          path: out
+          if-no-files-found: error
+          compression-level: 0
+
+  nix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build a relocatable offline Nix root closure
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          curl --fail --location --retry 4 --retry-all-errors https://nixos.org/nix/install -o /tmp/install-nix
+          sh /tmp/install-nix --no-daemon --yes
+          # shellcheck disable=SC1091
+          . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+          nix --version | tee out/VERSION.txt
+          target="$(readlink -f "$HOME/.nix-profile/bin/nix")"
+          printf '%s\n' "$target" > out/NIX_BINARY_TARGET.txt
+          sudo tar --zstd -cf out/nix-root.tar.zst /nix
+          sha256sum out/nix-root.tar.zst > out/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: toolchain-nix-linux-x86_64
+          path: out
+          if-no-files-found: error
+          compression-level: 0
