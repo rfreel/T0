@@ -1,0 +1,36 @@
+name: Verus Z3 4.16.0
+
+on:
+  push:
+    branches:
+      - agent/verus-z3-4160-20260911
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch exact Verus-compatible Z3
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          json="$(gh api repos/Z3Prover/z3/releases/tags/z3-4.16.0)"
+          url="$(jq -r '[.assets[] | select(.name == "z3-4.16.0-x64-glibc-2.39.zip")][0].browser_download_url // empty' <<<"$json")"
+          [[ -n "$url" ]] || { jq -r '.assets[].name' <<<"$json" >&2; exit 1; }
+          curl --fail --location --retry 4 --retry-all-errors "$url" -o out/z3-4.16.0-x64-glibc-2.39.zip
+          sha256sum out/z3-4.16.0-x64-glibc-2.39.zip > out/SHA256SUMS
+          unzip -q out/z3-4.16.0-x64-glibc-2.39.zip -d /tmp/z3
+          /tmp/z3/z3-4.16.0-x64-glibc-2.39/bin/z3 --version | tee out/VERSION.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verus-z3-4.16.0-linux-x86_64
+          path: out
+          if-no-files-found: error
+          compression-level: 0
