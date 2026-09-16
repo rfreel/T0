@@ -14,39 +14,22 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p pkg/{Inter,IBM-Plex,Instrument-Sans,Instrument-Serif,Source-Serif-4,Commit-Mono,Iosevka,STIX-Two,Noto-Core}
-          git clone --depth 1 https://github.com/rsms/inter.git /tmp/inter
-          cp /tmp/inter/docs/font-files/InterVariable.ttf pkg/Inter/
-          git clone --depth 1 https://github.com/IBM/plex.git /tmp/plex
-          find /tmp/plex -type f -iname 'IBMPlexSansCondensed-Regular.ttf' | head -1 | xargs -I{} cp '{}' pkg/IBM-Plex/
-          git clone --depth 1 https://github.com/Instrument/instrument-sans.git /tmp/is
-          find /tmp/is -type f -iname 'InstrumentSans-Regular.*' | head -1 | xargs -I{} cp '{}' pkg/Instrument-Sans/
-          git clone --depth 1 https://github.com/Instrument/instrument-serif.git /tmp/iserif
-          find /tmp/iserif -type f -iname 'InstrumentSerif-Regular.*' | head -1 | xargs -I{} cp '{}' pkg/Instrument-Serif/
-          git clone --depth 1 https://github.com/adobe-fonts/source-serif.git /tmp/ss
-          find /tmp/ss -type f -iname 'SourceSerif4Variable-Roman.otf' | head -1 | xargs -I{} cp '{}' pkg/Source-Serif-4/
-          git clone --depth 1 https://github.com/eigilnikolajsen/commit-mono.git /tmp/cm
-          find /tmp/cm -type f -iname '*400Regular.otf' | head -1 | xargs -I{} cp '{}' pkg/Commit-Mono/
+          git clone --depth 1 https://github.com/rsms/inter.git /tmp/inter; cp /tmp/inter/docs/font-files/InterVariable.ttf pkg/Inter/
+          git clone --depth 1 https://github.com/IBM/plex.git /tmp/plex; find /tmp/plex -type f -iname 'IBMPlexSansCondensed-Regular.ttf' | head -1 | xargs -I{} cp '{}' pkg/IBM-Plex/
+          git clone --depth 1 https://github.com/Instrument/instrument-sans.git /tmp/is; find /tmp/is -type f -iname 'InstrumentSans-Regular.*' | head -1 | xargs -I{} cp '{}' pkg/Instrument-Sans/
+          git clone --depth 1 https://github.com/Instrument/instrument-serif.git /tmp/iserif; find /tmp/iserif -type f -iname 'InstrumentSerif-Regular.*' | head -1 | xargs -I{} cp '{}' pkg/Instrument-Serif/
+          git clone --depth 1 https://github.com/adobe-fonts/source-serif.git /tmp/ss; find /tmp/ss -type f -iname 'SourceSerif4Variable-Roman.otf' | head -1 | xargs -I{} cp '{}' pkg/Source-Serif-4/
+          git clone --depth 1 https://github.com/eigilnikolajsen/commit-mono.git /tmp/cm; find /tmp/cm -type f -iname '*400Regular.otf' | head -1 | xargs -I{} cp '{}' pkg/Commit-Mono/
           curl -L https://api.github.com/repos/be5invis/Iosevka/releases/latest -o /tmp/io.json
-          IOURL=$(python3 -c "import json;d=json.load(open('/tmp/io.json'));print(next(a['browser_download_url'] for a in d['assets'] if a['name'].startswith('PkgTTF-Iosevka-') and a['name'].endswith('.zip')))" )
-          curl -L "$IOURL" -o /tmp/io.zip; unzip -q /tmp/io.zip -d /tmp/io
-          find /tmp/io -type f -iname 'Iosevka-Regular.ttf' | head -1 | xargs -I{} cp '{}' pkg/Iosevka/
-          curl -fL https://raw.githubusercontent.com/stipub/stixfonts/v2.13b171/zipfiles/static_otf.zip -o /tmp/stix.zip
-          unzip -q /tmp/stix.zip -d /tmp/stix
-          find /tmp/stix -type f -iname 'STIXTwoMath-Regular.otf' | head -1 | xargs -I{} cp '{}' pkg/STIX-Two/
+          IOURL=$(python3 -c "import json;d=json.load(open('/tmp/io.json'));print(next(a['browser_download_url'] for a in d['assets'] if a['name'].startswith('PkgTTF-Iosevka-') and a['name'].endswith('.zip')))" ); curl -L "$IOURL" -o /tmp/io.zip; unzip -q /tmp/io.zip -d /tmp/io; find /tmp/io -type f -iname 'Iosevka-Regular.ttf' | head -1 | xargs -I{} cp '{}' pkg/Iosevka/
+          curl -fL https://raw.githubusercontent.com/stipub/stixfonts/v2.13b171/zipfiles/static_otf.zip -o /tmp/stix.zip; unzip -q /tmp/stix.zip -d /tmp/stix; find /tmp/stix -type f -iname 'STIXTwoMath-Regular.otf' | head -1 | xargs -I{} cp '{}' pkg/STIX-Two/
           curl -fL 'https://raw.githubusercontent.com/google/fonts/main/ofl/notosans/NotoSans%5Bwdth,wght%5D.ttf' -o pkg/Noto-Core/NotoSans-variable.ttf
-          cp /tmp/inter/LICENSE.txt pkg/Inter/ || true
-          cp /tmp/plex/LICENSE.txt pkg/IBM-Plex/ || true
-          cp /tmp/is/OFL.txt pkg/Instrument-Sans/ || true
-          cp /tmp/iserif/OFL.txt pkg/Instrument-Serif/ || true
-          cp /tmp/ss/LICENSE.md pkg/Source-Serif-4/ || true
-          cp /tmp/cm/OFL.txt pkg/Commit-Mono/ || true
-          curl -fL https://raw.githubusercontent.com/stipub/stixfonts/master/OFL.txt -o pkg/STIX-Two/OFL.txt
-          curl -fL https://raw.githubusercontent.com/google/fonts/main/ofl/notosans/OFL.txt -o pkg/Noto-Core/OFL.txt
+          cp /tmp/inter/LICENSE.txt pkg/Inter/ || true; cp /tmp/plex/LICENSE.txt pkg/IBM-Plex/ || true; cp /tmp/is/OFL.txt pkg/Instrument-Sans/ || true; cp /tmp/iserif/OFL.txt pkg/Instrument-Serif/ || true; cp /tmp/ss/LICENSE.md pkg/Source-Serif-4/ || true
+          curl -fL https://raw.githubusercontent.com/stipub/stixfonts/master/OFL.txt -o pkg/STIX-Two/OFL.txt; curl -fL https://raw.githubusercontent.com/google/fonts/main/ofl/notosans/OFL.txt -o pkg/Noto-Core/OFL.txt
           find pkg -type f -exec sha256sum {} \; > pkg/SHA256SUMS.txt
-          mkdir -p downloads
-          (cd pkg && zip -qr ../downloads/font-frontier.zip .)
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add downloads/font-frontier.zip
+          mkdir -p downloads; (cd pkg && zip -qr ../downloads/font-frontier.zip .)
+          git config user.name github-actions; git config user.email github-actions@github.com
+          git checkout -B font-frontier-package
+          git add -f downloads/font-frontier.zip
           git commit -m 'publish font frontier zip'
-          git push
+          git push --force origin HEAD:font-frontier-package
