@@ -1,0 +1,33 @@
+name: beads-tools-bridge
+on:
+  push:
+    branches: [tool-acquire-20260916]
+    paths: ['.github/workflows/beads-tools-bridge.yml']
+permissions:
+  contents: read
+jobs:
+  bridge:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Acquire br and bv
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p out/br out/bv
+          curl -fL -o /tmp/br.tar.gz https://github.com/Dicklesworthstone/beads_rust/releases/download/v0.6.0/br-0.6.0-linux_amd64.tar.gz
+          echo 'f6f9a1663bae31e94d2dcfec62163f15b17f822711c486e860183a654784829b  /tmp/br.tar.gz' | sha256sum -c -
+          tar -xzf /tmp/br.tar.gz -C out/br
+          curl -fL -o /tmp/bv.tar.gz https://github.com/Dicklesworthstone/beads_viewer/releases/download/v0.25.0/bv_0.25.0_linux_amd64.tar.gz
+          echo 'ea756bfadd165b66368b512cf3d7e036e5757df5d7c8f8e2b43a12e0a51b6429  /tmp/bv.tar.gz' | sha256sum -c -
+          tar -xzf /tmp/bv.tar.gz -C out/bv
+          find out -maxdepth 3 -type f -ls
+          BR=$(find out/br -type f -name br -perm -111 | head -1)
+          BV=$(find out/bv -type f -name bv -perm -111 | head -1)
+          "$BR" version
+          "$BV" --version
+      - uses: actions/upload-artifact@v4
+        with:
+          name: beads-tools-linux-x86_64
+          path: out/
+          retention-days: 1
+          compression-level: 6
