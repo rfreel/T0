@@ -1,0 +1,17 @@
+name: artifact-bridge-test
+on:
+  push:
+    branches: [tool-acquire-20260916]
+    paths: ['.github/workflows/artifact-bridge-test.yml']
+permissions:
+  contents: read
+jobs:
+  bridge:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: printf 'artifact-bridge-ok\n' > bridge.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bridge-test
+          path: bridge.txt
+          retention-days: 1
