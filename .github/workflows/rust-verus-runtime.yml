@@ -1,0 +1,65 @@
+name: rust-verus-runtime
+on:
+  push:
+    branches: [tool-acquire-20260916]
+    paths: ['.github/workflows/rust-verus-runtime.yml']
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Install isolated Rust 1.98.1 runtime
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p out/rustup out/cargo/bin
+          export RUSTUP_HOME="$PWD/out/rustup"
+          export CARGO_HOME="$PWD/out/cargo"
+          RUSTUP_BIN="$(readlink -f "$(command -v rustup)")"
+          "$RUSTUP_BIN" set profile minimal
+          "$RUSTUP_BIN" toolchain install 1.98.1-x86_64-unknown-linux-gnu --profile minimal
+          cp "$RUSTUP_BIN" out/cargo/bin/rustup
+          ln -s rustup out/cargo/bin/rustc
+          ln -s rustup out/cargo/bin/cargo
+          rm -rf out/rustup/downloads out/rustup/tmp
+          PATH="$PWD/out/cargo/bin:$PATH" rustc --version
+          PATH="$PWD/out/cargo/bin:$PATH" cargo --version
+      - name: Smoke Verus against isolated runtime
+        shell: bash
+        run: |
+          set -euxo pipefail
+          export RUSTUP_HOME="$PWD/out/rustup"
+          export CARGO_HOME="$PWD/out/cargo"
+          export PATH="$PWD/out/cargo/bin:$PATH"
+          gh release download 'release/0.2026.09.13.671956e' --repo verus-lang/verus --pattern 'verus-0.2026.09.13.671956e-x86-linux.zip'
+          unzip -q verus-0.2026.09.13.671956e-x86-linux.zip
+          ./verus-x86-linux/verus --version
+          cat > smoke.rs <<'EOF'
+          use vstd::prelude::*;
+          verus! {
+          fn main() {}
+          proof fn acquired_runtime_smoke() {
+              assert(1 + 1 == 2);
+          }
+          }
+          EOF
+          ./verus-x86-linux/verus smoke.rs
+      - name: Pack runtime
+        shell: bash
+        run: |
+          set -euxo pipefail
+          tar --zstd -C out -cf rust-1.98.1-verus-runtime-linux-x86_64.tar.zst rustup cargo
+          sha256sum rust-1.98.1-verus-runtime-linux-x86_64.tar.zst > rust-runtime.sha256
+          ls -lh rust-1.98.1-verus-runtime-linux-x86_64.tar.zst
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rust-1.98.1-verus-runtime-linux-x86_64
+          path: |
+            rust-1.98.1-verus-runtime-linux-x86_64.tar.zst
+            rust-runtime.sha256
+          compression-level: 0
+          retention-days: 1
