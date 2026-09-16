@@ -1,0 +1,42 @@
+name: tool-artifact-bridge
+on:
+  push:
+    branches: [tool-acquire-20260916]
+    paths: ['.github/workflows/tool-artifact-bridge.yml']
+permissions:
+  contents: read
+jobs:
+  bridge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Download verified release assets
+        run: |
+          set -euxo pipefail
+          gh release download tool-bundle-20260916 \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern 'python-tools-py313-linux-x86_64.tar.zst' \
+            --pattern 'lean4-4.31.0-linux-x86_64.tar.zst' \
+            --pattern 'egglog-3-linux-x86_64.tar.zst' \
+            --pattern 'SHA256SUMS'
+          sha256sum -c SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-tools-py313-linux-x86_64
+          path: python-tools-py313-linux-x86_64.tar.zst
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: egglog-3-linux-x86_64
+          path: egglog-3-linux-x86_64.tar.zst
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lean4-4.31.0-linux-x86_64
+          path: lean4-4.31.0-linux-x86_64.tar.zst
+          compression-level: 0
+          retention-days: 1
