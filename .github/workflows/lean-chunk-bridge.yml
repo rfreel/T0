@@ -1,0 +1,41 @@
+name: lean-chunk-bridge
+on:
+  push:
+    branches: [tool-acquire-20260916]
+    paths: ['.github/workflows/lean-chunk-bridge.yml']
+permissions:
+  contents: read
+jobs:
+  bridge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Download and verify Lean release asset
+        run: |
+          set -euxo pipefail
+          gh release download tool-bundle-20260916 --repo "$GITHUB_REPOSITORY" \
+            --pattern 'lean4-4.31.0-linux-x86_64.tar.zst' \
+            --pattern 'SHA256SUMS'
+          grep 'lean4-4.31.0-linux-x86_64.tar.zst' SHA256SUMS | sha256sum -c -
+          split -b 300MiB -d -a 2 lean4-4.31.0-linux-x86_64.tar.zst lean.part-
+          ls -lh lean.part-*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lean-part-00
+          path: lean.part-00
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lean-part-01
+          path: lean.part-01
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lean-part-02
+          path: lean.part-02
+          compression-level: 0
+          retention-days: 1
