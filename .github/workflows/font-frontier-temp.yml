@@ -1,0 +1,54 @@
+name: Build Font Frontier Temp
+on:
+  push:
+    paths: ['.github/workflows/font-frontier-temp.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pack
+        shell: bash
+        run: |
+          set -euxo pipefail
+          rm -rf /tmp/fontpack font-frontier.zip
+          mkdir -p /tmp/fontpack/{Inter,IBM-Plex,Instrument-Sans,Instrument-Serif,Source-Serif-4,Commit-Mono,Iosevka,STIX-Two,Noto-Core}
+          git clone --depth 1 https://github.com/rsms/inter.git /tmp/inter
+          cp /tmp/inter/docs/font-files/InterVariable.ttf /tmp/fontpack/Inter/
+          git clone --depth 1 https://github.com/IBM/plex.git /tmp/plex
+          find /tmp/plex -type f -iname 'IBMPlexSansCondensed-Regular.ttf' | head -1 | xargs -I{} cp '{}' /tmp/fontpack/IBM-Plex/
+          git clone --depth 1 https://github.com/Instrument/instrument-sans.git /tmp/is
+          find /tmp/is -type f -iname 'InstrumentSans-Regular.*' | head -1 | xargs -I{} cp '{}' /tmp/fontpack/Instrument-Sans/
+          git clone --depth 1 https://github.com/Instrument/instrument-serif.git /tmp/iserif
+          find /tmp/iserif -type f -iname 'InstrumentSerif-Regular.*' | head -1 | xargs -I{} cp '{}' /tmp/fontpack/Instrument-Serif/
+          git clone --depth 1 https://github.com/adobe-fonts/source-serif.git /tmp/ss
+          find /tmp/ss -type f -iname 'SourceSerif4Variable-Roman.otf' | head -1 | xargs -I{} cp '{}' /tmp/fontpack/Source-Serif-4/
+          git clone --depth 1 https://github.com/eigilnikolajsen/commit-mono.git /tmp/cm
+          find /tmp/cm -type f -iname '*400Regular.otf' | head -1 | xargs -I{} cp '{}' /tmp/fontpack/Commit-Mono/
+          curl -L https://api.github.com/repos/be5invis/Iosevka/releases/latest -o /tmp/io.json
+          IOURL=$(python3 -c "import json;d=json.load(open('/tmp/io.json'));print(next(a['browser_download_url'] for a in d['assets'] if a['name'].startswith('PkgTTF-Iosevka-') and a['name'].endswith('.zip')))" )
+          curl -L "$IOURL" -o /tmp/io.zip; unzip -q /tmp/io.zip -d /tmp/io
+          find /tmp/io -type f -iname 'Iosevka-Regular.ttf' | head -1 | xargs -I{} cp '{}' /tmp/fontpack/Iosevka/
+          git clone --depth 1 https://github.com/stipub/stixfonts.git /tmp/stix
+          find /tmp/stix -type f -iname 'STIX2Math.otf' | head -1 | xargs -I{} cp '{}' /tmp/fontpack/STIX-Two/
+          curl -fL 'https://raw.githubusercontent.com/notofonts/noto-fonts/main/hinted/ttf/NotoSans/NotoSans-Regular.ttf' -o '/tmp/fontpack/Noto-Core/NotoSans-Regular.ttf'
+          cp /tmp/inter/LICENSE.txt /tmp/fontpack/Inter/ 2>/dev/null || true
+          cp /tmp/plex/LICENSE.txt /tmp/fontpack/IBM-Plex/ 2>/dev/null || true
+          cp /tmp/is/OFL.txt /tmp/fontpack/Instrument-Sans/ 2>/dev/null || true
+          cp /tmp/iserif/OFL.txt /tmp/fontpack/Instrument-Serif/ 2>/dev/null || true
+          cp /tmp/ss/LICENSE.md /tmp/fontpack/Source-Serif-4/ 2>/dev/null || true
+          cp /tmp/cm/OFL.txt /tmp/fontpack/Commit-Mono/ 2>/dev/null || true
+          cp /tmp/stix/OFL.txt /tmp/fontpack/STIX-Two/ 2>/dev/null || true
+          find /tmp/fontpack -type f -exec sha256sum {} \; > /tmp/fontpack/SHA256SUMS.txt
+          (cd /tmp/fontpack && zip -qr "$GITHUB_WORKSPACE/font-frontier.zip" .)
+          test -s font-frontier.zip
+      - name: Commit pack temporarily
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add -f font-frontier.zip
+          git commit -m 'temporary font frontier zip' || true
+          git push
