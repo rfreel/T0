@@ -1,0 +1,28 @@
+name: verus-bridge
+on:
+  push:
+    branches: [tool-acquire-20260916]
+    paths: ['.github/workflows/verus-bridge.yml']
+permissions:
+  contents: read
+jobs:
+  bridge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Download current Verus Linux release
+        shell: bash
+        run: |
+          set -euxo pipefail
+          gh release download 'release/0.2026.09.13.671956e' \
+            --repo verus-lang/verus \
+            --pattern 'verus-0.2026.09.13.671956e-x86-linux.zip'
+          echo '08c85b96e0fbbbdcb1b3a9fa8943dce7598c3e7b343680820f649b4e1efda4b4  verus-0.2026.09.13.671956e-x86-linux.zip' | sha256sum -c -
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verus-0.2026.09.13.671956e-x86-linux
+          path: verus-0.2026.09.13.671956e-x86-linux.zip
+          compression-level: 0
+          retention-days: 1
