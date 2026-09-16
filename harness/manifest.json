@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "checks": [
+    {
+      "id": "harness-self-test",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "harness/tests",
+        "-v"
+      ],
+      "timeout_seconds": 120,
+      "expect": {
+        "exit_code": 0,
+        "combined_contains": [
+          "Ran 4 tests",
+          "OK"
+        ]
+      }
+    },
+    {
+      "id": "loop-contract",
+      "command": [
+        "python",
+        "-c",
+        "import json, pathlib; json.load(open('prd.json', encoding='utf-8')); assert len(pathlib.Path('loop/log.txt').read_text(encoding='utf-8').splitlines()) <= 50; print('loop contract valid')"
+      ],
+      "timeout_seconds": 30,
+      "expect": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "loop contract valid"
+        ],
+        "required_files": [
+          "loop/GOAL.md",
+          "loop/RULES.md",
+          "loop/log.txt",
+          "loop/last_error.txt",
+          "prd.json",
+          "progress.txt"
+        ]
+      }
+    },
+    {
+      "id": "identifier-contract",
+      "cwd": "experiments/input5-beta",
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "timeout_seconds": 120,
+      "expect": {
+        "exit_code": 0,
+        "stdout_contains": [
+          "passed"
+        ],
+        "required_files": [
+          "contract-v1.0.0.json",
+          "src/identifiers/normalize.py",
+          "tests/test_contract.py",
+          "tests/test_security.py"
+        ]
+      }
+    }
+  ]
+}
