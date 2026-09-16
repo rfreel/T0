@@ -1,0 +1,24 @@
+name: qwen-pin
+on:
+  push:
+    branches: [tool-acquire-20260916]
+    paths: ['.github/workflows/qwen-pin.yml']
+permissions:
+  contents: read
+jobs:
+  pin:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Resolve immutable model revision
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://huggingface.co/api/models/Qwen/Qwen2.5-0.5B-Instruct > model.json
+          jq '{repo_id:.id,sha:.sha,lastModified:.lastModified,pipeline_tag:.pipeline_tag}' model.json > model-pin.json
+          test -n "$(jq -r .sha model-pin.json)"
+          cat model-pin.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qwen-0.5b-model-pin
+          path: model-pin.json
+          retention-days: 1
