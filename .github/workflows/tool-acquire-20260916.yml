@@ -1,0 +1,94 @@
+name: tool-acquire-20260916
+
+on:
+  push:
+    branches: [tool-acquire-20260916]
+    paths:
+      - '.github/workflows/tool-acquire-20260916.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  acquire:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Python analysis stack
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p out/python
+          python -m pip install --target "$PWD/out/python" \
+            z3-solver hypothesis duckdb polars pyarrow
+          python -m pip freeze --path "$PWD/out/python" > out/python-requirements.txt
+          PYTHONPATH="$PWD/out/python" python - <<'PY'
+          import z3, hypothesis, duckdb, polars, pyarrow
+          print('z3', z3.get_version_string())
+          print('hypothesis', hypothesis.__version__)
+          print('duckdb', duckdb.__version__)
+          print('polars', polars.__version__)
+          print('pyarrow', pyarrow.__version__)
+          PY
+          tar --zstd -C out -cf python-tools-py313-linux-x86_64.tar.zst python python-requirements.txt
+
+      - name: Lean 4.31.0
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -fsSL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh \
+            | sh -s -- -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          elan toolchain install leanprover/lean4:v4.31.0
+          LEAN_BIN="$(ELAN_TOOLCHAIN=leanprover/lean4:v4.31.0 elan which lean)"
+          LEAN_ROOT="$(dirname "$(dirname "$LEAN_BIN")")"
+          cp -a "$LEAN_ROOT" out/lean4
+          out/lean4/bin/lean --version
+          tar --zstd -C out -cf lean4-4.31.0-linux-x86_64.tar.zst lean4
+
+      - name: egglog 3
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cargo install --locked --git https://github.com/egraphs-good/egglog.git --root "$PWD/out/egglog"
+          out/egglog/bin/egglog --version
+          tar --zstd -C out -cf egglog-3-linux-x86_64.tar.zst egglog
+
+      - name: Checksums and manifest
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sha256sum \
+            python-tools-py313-linux-x86_64.tar.zst \
+            lean4-4.31.0-linux-x86_64.tar.zst \
+            egglog-3-linux-x86_64.tar.zst > SHA256SUMS
+          {
+            echo "built_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "python=$(python --version 2>&1)"
+            echo "lean=$(out/lean4/bin/lean --version 2>&1)"
+            echo "egglog=$(out/egglog/bin/egglog --version 2>&1)"
+            cat out/python-requirements.txt
+          } > MANIFEST.txt
+          ls -lh *.tar.zst SHA256SUMS MANIFEST.txt
+
+      - name: Publish transport release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euxo pipefail
+          gh release create tool-bundle-20260916 \
+            python-tools-py313-linux-x86_64.tar.zst \
+            lean4-4.31.0-linux-x86_64.tar.zst \
+            egglog-3-linux-x86_64.tar.zst \
+            SHA256SUMS MANIFEST.txt \
+            --target "$GITHUB_SHA" \
+            --title "Portable reasoning tools 2026-09-16" \
+            --notes "Open-source transport bundle for Linux x86_64 / Python 3.13. Built and smoke-tested in GitHub Actions."
