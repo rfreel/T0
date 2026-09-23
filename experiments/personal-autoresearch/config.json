@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "target_name": "service-replacement-portfolio",
+  "inventory_file": "target/inventory.example.csv",
+  "catalog_file": "target/catalog.json",
+  "candidate_file": "target/candidate/portfolio.json",
+  "research_notes_file": "target/candidate/RESEARCH_NOTES.md",
+  "research_queue_file": "target/candidate/research_queue.json",
+  "mutable_files": [
+    "candidate/portfolio.json",
+    "candidate/RESEARCH_NOTES.md",
+    "candidate/research_queue.json"
+  ],
+  "locked_files": [
+    "PROGRAM.md",
+    "prepare.py",
+    "evaluate.py",
+    "run.py",
+    "config.json",
+    "target/OBJECTIVE.md",
+    "target/CONSTRAINTS.md",
+    "target/catalog.json"
+  ],
+  "minimum_score_delta": 0.01,
+  "history_rows_in_prompt": 20,
+  "agent_timeout_seconds": 900,
+  "require_experiment_branch": true,
+  "autocommit_kept_iterations": true,
+  "default_agent_command": "codex exec --ephemeral --sandbox workspace-write --ask-for-approval never --skip-git-repo-check -C {workspace} -"
+}

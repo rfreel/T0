@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "currency": "USD",
+  "services": {
+    "notes": {
+      "options": [
+        {
+          "option_id": "notes_current",
+          "label": "Current hosted notes service",
+          "mode": "keep",
+          "monthly_cost": 14.99,
+          "migration_hours": 0.0,
+          "maintenance_hours_monthly": 0.1,
+          "privacy": 0.55,
+          "reliability": 0.94,
+          "feature_coverage": {"capture": 1.0, "offline": 0.9, "search": 1.0, "export": 0.8, "web_clip": 1.0}
+        },
+        {
+          "option_id": "notes_local_sync",
+          "label": "Local-first notes plus managed sync",
+          "mode": "replace",
+          "monthly_cost": 4.00,
+          "migration_hours": 4.0,
+          "maintenance_hours_monthly": 0.5,
+          "privacy": 0.90,
+          "reliability": 0.86,
+          "feature_coverage": {"capture": 0.9, "offline": 1.0, "search": 0.9, "export": 1.0, "web_clip": 0.7}
+        },
+        {
+          "option_id": "notes_self_hosted",
+          "label": "Self-hosted open-source notes",
+          "mode": "rebuild",
+          "monthly_cost": 2.00,
+          "migration_hours": 8.0,
+          "maintenance_hours_monthly": 1.5,
+          "privacy": 0.97,
+          "reliability": 0.74,
+          "feature_coverage": {"capture": 0.85, "offline": 0.9, "search": 0.85, "export": 1.0, "web_clip": 0.65}
+        }
+      ]
+    },
+    "cloud_storage": {
+      "options": [
+        {
+          "option_id": "cloud_current",
+          "label": "Current hosted cloud storage",
+          "mode": "keep",
+          "monthly_cost": 19.99,
+          "migration_hours": 0.0,
+          "maintenance_hours_monthly": 0.1,
+          "privacy": 0.58,
+          "reliability": 0.97,
+          "feature_coverage": {"sync": 1.0, "sharing": 1.0, "versioning": 1.0, "mobile": 1.0, "export": 0.9}
+        },
+        {
+          "option_id": "cloud_bundle",
+          "label": "Lower-cost ecosystem storage bundle",
+          "mode": "replace",
+          "monthly_cost": 9.99,
+          "migration_hours": 5.0,
+          "maintenance_hours_monthly": 0.2,
+          "privacy": 0.62,
+          "reliability": 0.95,
+          "feature_coverage": {"sync": 1.0, "sharing": 0.9, "versioning": 0.85, "mobile": 1.0, "export": 0.8}
+        },
+        {
+          "option_id": "cloud_hybrid",
+          "label": "Encrypted local storage plus small hosted relay",
+          "mode": "rebuild",
+          "monthly_cost": 3.50,
+          "migration_hours": 10.0,
+          "maintenance_hours_monthly": 2.0,
+          "privacy": 0.96,
+          "reliability": 0.78,
+          "feature_coverage": {"sync": 0.9, "sharing": 0.65, "versioning": 0.9, "mobile": 0.8, "export": 1.0}
+        }
+      ]
+    },
+    "automation": {
+      "options": [
+        {
+          "option_id": "automation_current",
+          "label": "Current hosted automation service",
+          "mode": "keep",
+          "monthly_cost": 29.99,
+          "migration_hours": 0.0,
+          "maintenance_hours_monthly": 0.2,
+          "privacy": 0.48,
+          "reliability": 0.93,
+          "feature_coverage": {"triggers": 1.0, "multi_step": 1.0, "webhooks": 1.0, "scheduling": 1.0, "export": 0.7}
+        },
+        {
+          "option_id": "automation_managed_lowcost",
+          "label": "Lower-cost managed automation",
+          "mode": "replace",
+          "monthly_cost": 10.00,
+          "migration_hours": 6.0,
+          "maintenance_hours_monthly": 0.4,
+          "privacy": 0.58,
+          "reliability": 0.88,
+          "feature_coverage": {"triggers": 0.95, "multi_step": 0.9, "webhooks": 0.9, "scheduling": 1.0, "export": 0.85}
+        },
+        {
+          "option_id": "automation_self_hosted",
+          "label": "Self-hosted workflow automation",
+          "mode": "rebuild",
+          "monthly_cost": 5.00,
+          "migration_hours": 12.0,
+          "maintenance_hours_monthly": 2.5,
+          "privacy": 0.94,
+          "reliability": 0.76,
+          "feature_coverage": {"triggers": 0.9, "multi_step": 1.0, "webhooks": 1.0, "scheduling": 0.95, "export": 1.0}
+        },
+        {
+          "option_id": "automation_cancel",
+          "label": "Cancel automation service",
+          "mode": "cancel",
+          "monthly_cost": 0.0,
+          "migration_hours": 1.0,
+          "maintenance_hours_monthly": 0.0,
+          "privacy": 1.0,
+          "reliability": 1.0,
+          "feature_coverage": {"triggers": 0.0, "multi_step": 0.0, "webhooks": 0.0, "scheduling": 0.0, "export": 1.0}
+        }
+      ]
+    }
+  }
+}

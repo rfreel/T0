@@ -1,0 +1,5 @@
+.autoresearch/
+target/private/*
+!target/private/.gitkeep
+__pycache__/
+*.pyc
