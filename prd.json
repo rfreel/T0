@@ -75,6 +75,19 @@
       ],
       "passes": true,
       "notes": "Updated GitHub plan with autocommit zero-friction guidance and safeguards."
+    },
+    {
+      "id": "EPISODE-001",
+      "title": "Build consequence-bearing episode ledger",
+      "acceptance": [
+        "Dependency-free Python CLI persists episodes in SQLite",
+        "Commitment freezes the prediction and intervention contract",
+        "Observations and events are append-only with a verifiable hash chain",
+        "Assessment, policy update, closure, due review, reopen, and export paths work",
+        "Deterministic unit tests and CI cover the lifecycle and invariants"
+      ],
+      "passes": true,
+      "notes": "Implemented consequence.py, examples, documentation, CI integration, and 11 passing deterministic tests plus a complete CLI lifecycle smoke test."
     }
   ]
 }

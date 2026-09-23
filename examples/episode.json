@@ -1,0 +1,19 @@
+{
+  "title": "Reduce decision-to-action latency",
+  "situation": "A recurring decision remains open after decisive evidence is available.",
+  "decision": "Whether a bounded intervention should replace another analysis cycle.",
+  "baseline": "Comparable decisions remain open for about ten days.",
+  "intervention": "Commit to the lowest-cost reversible intervention after verification.",
+  "authority": "The operator may act within the declared budget and rollback boundary.",
+  "resources": "Four operator-hours and no external spend.",
+  "horizon": "2026-08-15T23:59:59+00:00",
+  "prediction": "Median decision-to-action latency will fall to five days or less.",
+  "rival_prediction": "Latency will remain unchanged because coordination is the bottleneck.",
+  "success_criterion": "Median latency is at most five days and no safety invariant fails.",
+  "rollback": "Restore the prior approval path if any safety invariant fails.",
+  "metric_name": "decision_to_action_days",
+  "metric_unit": "days",
+  "baseline_value": 10,
+  "target_value": 5,
+  "direction": "decrease"
+}
