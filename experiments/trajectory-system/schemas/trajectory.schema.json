@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "trajectory_id",
+    "objective",
+    "authority",
+    "current_state",
+    "material_rivals",
+    "next_decision",
+    "selected_action",
+    "verification",
+    "recovery",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "trajectory_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority": {
+      "type": "object"
+    },
+    "environment": {
+      "type": "object"
+    },
+    "current_state": {
+      "type": "object"
+    },
+    "material_rivals": {
+      "type": "array"
+    },
+    "next_decision": {
+      "type": "object"
+    },
+    "selected_action": {
+      "type": "object"
+    },
+    "verification": {
+      "type": "object"
+    },
+    "recovery": {
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "authorized",
+        "executing",
+        "blocked",
+        "verified",
+        "closed"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

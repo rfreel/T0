@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "trajectory_id": "bootstrap-2026-07-30",
+  "checkpoint": "draft PR 46 at materialized commit d1645a8f0116f7e8c161d72209b24d472de7d551",
+  "rollback": "close draft PR 46 and delete agent/trajectory-system-bootstrap; main remains unchanged",
+  "next_blocker": "none for branch-based trials; merge remains outside current authority",
+  "verification": "PASS",
+  "pull_request_url": "https://github.com/rfreel/T0/pull/46"
+}

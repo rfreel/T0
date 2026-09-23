@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "episode_id": "bootstrap-local-scaffold",
+  "trajectory_id": "bootstrap-2026-07-30",
+  "objective": "Create a reversible local bootstrap of the trajectory system and verify it without performing remote writes.",
+  "environment": {
+    "identity": "current ChatGPT container runtime",
+    "workspace": "/mnt/data/trajectory-system",
+    "repository": "local git repository",
+    "branch": "bootstrap/trajectory-system-v1",
+    "external_services": []
+  },
+  "retrieved_procedures": [
+    "planning-observation-boundary",
+    "compile-plan-to-tasks",
+    "index-raw-trace",
+    "promote-procedure",
+    "authorize-exact-action"
+  ],
+  "action": {
+    "action": "create local repository scaffold and five candidate procedures",
+    "reversibility": "delete directory or reset local branch",
+    "expected_effect": "versioned, inspectable bootstrap passes deterministic checks",
+    "stopping_boundary": "stop before any remote GitHub write"
+  },
+  "expected_result": {
+    "verification": "all deterministic checks pass"
+  },
+  "observed_result": {
+    "status": "local scaffold created",
+    "skills_preserved": 27,
+    "candidate_procedures": 5
+  },
+  "verifier_result": {
+    "status": "PASS",
+    "command": "./scripts/verify-repository"
+  },
+  "divergence": null,
+  "causal_alternatives": [
+    "scaffold may be too heavy"
+  ],
+  "user_judgment": null,
+  "trace_locations": [
+    "traces/2026/07/bootstrap-command.log"
+  ]
+}

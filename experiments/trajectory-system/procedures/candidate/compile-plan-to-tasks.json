@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "procedure": {
+    "id": "compile-plan-to-tasks",
+    "purpose": "Compile a stable plan segment into independently executable tasks with dependency and provenance links."
+  },
+  "source": {
+    "skill": "beads-workflow",
+    "path": "skills/upstream/beads-workflow/SKILL.md"
+  },
+  "triggering_conditions": [
+    "plan segment stable through next observation boundary"
+  ],
+  "prohibited_conditions": [
+    "unresolved objective conflict",
+    "missing acceptance criteria"
+  ],
+  "required_inputs": [
+    "versioned plan",
+    "source hash"
+  ],
+  "inspected_preconditions": [
+    "plan source hash captured"
+  ],
+  "proposed_transition": {
+    "from": "stable plan segment",
+    "to": "dependency-linked task units"
+  },
+  "authority_class": "read_and_propose",
+  "execution_steps": [
+    "split by independently verifiable outcome",
+    "attach source section and hash",
+    "declare dependencies",
+    "attach acceptance test"
+  ],
+  "expected_effect": "Tasks can be executed and checked without semantic drift from the source plan.",
+  "verifier": {
+    "mechanism": "provenance_and_dependency_check",
+    "acceptance": [
+      "every task has source hash",
+      "every task has acceptance condition",
+      "dependency graph is acyclic"
+    ]
+  },
+  "rollback": {
+    "method": "discard generated task set and retain source plan",
+    "irreversible": false
+  },
+  "emitted_trace": [
+    "decision record",
+    "verifier result"
+  ],
+  "known_failure_modes": [
+    "semantic fork between plan and tasks",
+    "hidden shared dependency"
+  ],
+  "confidence": 0.76,
+  "status": "candidate",
+  "review_trigger": "after first end-to-end trial"
+}
