@@ -1,13 +1,29 @@
-# Canonical Loop Scaffold
+# UTP Agent Portability Layer
 
-Center = loop/ files, Radius = last 50 lines of loop/log.txt, Tangent = pre-commit + CI checks.
-Keep the loop small: only radius lines are in context.
-Back-pressure comes from pre-commit locally or CI remotely.
-The loop is bash-driven and stack-agnostic.
-When CI fails, capture the error vector in loop/last_error.txt.
+TypeScript implementation of the Universal Transpilation Protocol (UTP) with strict schemas, deterministic run artifacts, and portable tool-harness adapters.
 
-## Usage
-A) PR-only: push a branch and let CI enforce the tangent.
-B) Codespaces/local: run scripts/ralph/loop.sh to apply radius + pre-commit.
+## 60-second first successful run
+```bash
+pnpm install
+pnpm utp:run --source examples/utp/prompt-stack/inputs/source.txt --source-domain prompt-stack --target-domain prompt-stack --target-env local --out runs
+# copy printed run path, then:
+pnpm utp:audit --run runs/<utc-iso>
+```
 
-To intentionally trigger failure: break prd.json or exceed 50 lines in loop/log.txt.
+## Documentation
+- [UTP scope/non-goals](docs/utp/SCOPE.md)
+- [Architecture](docs/utp/ARCHITECTURE.md)
+- [Usage](docs/utp/USAGE.md)
+- [Schemas](docs/utp/SCHEMAS.md)
+- [Adding adapters](docs/utp/ADDING_ADAPTERS.md)
+- [Failure modes](docs/utp/FAILURE_MODES.md)
+
+## CLI entrypoints
+- `pnpm utp:run`
+- `pnpm utp:audit`
+- `pnpm utp:replay`
+
+## Testing
+- `pnpm test`
+- `pnpm test:integration`
+- `pnpm test:golden`

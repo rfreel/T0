@@ -1,0 +1,41 @@
+{
+  "name": "rlm-mastra-style",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.23.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "node --enable-source-maps dist/main.js",
+    "dev": "tsx src/main.ts",
+    "test": "node --import tsx --test src/utp/__tests__/*.test.ts",
+    "test:integration": "bash scripts/utp/integration.sh",
+    "test:golden": "bash scripts/utp/golden_drift.sh",
+    "utp:run": "node --import tsx src/utp/cli.ts run",
+    "utp:audit": "node --import tsx src/utp/cli.ts audit",
+    "utp:replay": "node --import tsx src/utp/cli.ts replay"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/core": "^2.1.0",
+    "@opentelemetry/resources": "^2.1.0",
+    "@opentelemetry/sdk-node": "^0.203.0",
+    "@opentelemetry/sdk-trace-base": "^2.1.0",
+    "better-sqlite3": "^11.8.1",
+    "openai": "^4.86.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.13.5",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  },
+  "bin": {
+    "utp": "src/utp/cli.ts"
+  }
+}
