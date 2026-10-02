@@ -1,0 +1,37 @@
+{
+  "contract_id": "rfreel.T0.normalize_identifier",
+  "version": "1.0.0",
+  "status": "active",
+  "input": {
+    "type": "unicode string"
+  },
+  "output": {
+    "type": "unicode string",
+    "guarantees": [
+      "Unicode compatibility normalization using NFKC",
+      "leading and trailing whitespace removed",
+      "Unicode-aware case folding applied",
+      "Unicode general categories beginning with C are rejected"
+    ]
+  },
+  "errors": {
+    "unsafe_identifier": "Raised when the normalized identifier contains a Unicode control, format, surrogate, private-use, or unassigned code point"
+  },
+  "examples": [
+    {"input": "  Alice  ", "output": "alice"},
+    {"input": "ＡＬＩＣＥ", "output": "alice"},
+    {"input": "Invoice-42", "output": "invoice-42"}
+  ],
+  "rejections": [
+    {"input_escape": "alice\\u200b", "reason": "format character"},
+    {"input_escape": "order\\u0000", "reason": "control character"}
+  ],
+  "compatibility": {
+    "consumer_rule": "A compatible replacement must preserve all guarantees, examples, rejection behavior, and exception class semantics",
+    "breaking_change": "Any removal or weakening of a guarantee, accepted rejection example, or changed exception semantics requires a new major version"
+  },
+  "revocation": {
+    "signal": "Set status to revoked in a later signed contract record and identify affected immutable commits",
+    "consumer_action": "Block upgrades, retain the last passing immutable commit, and open external failure feedback"
+  }
+}

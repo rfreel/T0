@@ -21,3 +21,5 @@
 2026-02-12 | UTP-PORT-001 | complete | implemented portable UTP layer with schemas, harness, adapters, CLI, examples, and CI gates
 2026-02-12 | UTP-PORT-002 | complete | fixed deterministic JSON serialization and improved schema validation errors in harness
 2026-02-12 | UTP-PORT-003 | complete | pinned packageManager to cached pnpm version to remove corepack bootstrap fetch failure
+
+2026-10-02 | CI-FONT-001 | implementation verified, merge pending | publish generated packs as Actions artifacts instead of pushing protected main; CI 36978742379, build 36978652589, artifact 11214542655

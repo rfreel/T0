@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "executed_command": "python -m pytest -q",
+  "result": "9 passed in 0.05s",
+  "verified_at_local_runtime": "2026-07-29T21:48:00-07:00",
+  "contract": {
+    "id": "rfreel.T0.normalize_identifier",
+    "version": "1.0.0",
+    "file": "contract-v1.0.0.json"
+  },
+  "artifacts": {
+    "README.md": "9fac4f0abaea9c1d9a5f70a0e14195d9205c971d9560244403062925ae023586",
+    "contract-v1.0.0.json": "698d6fa77ac0423884ed3550fae8f94621ab00644ead7b81d1dcf88ec5233056",
+    "pyproject.toml": "e5ad646f9e9e6ffec240c23a3d4e1f6ba6777e8afc2fb93882b1dafb7375d8e8",
+    "src/identifiers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/identifiers/normalize.py": "93924608bf67290803fa4f847c6c249acaac7151e40b5ddffbd9da791e0ebffb",
+    "src/identifiers/user.py": "b169ef19efd9288eeb19f02471479128ed12c55876fe242a61b91e122e08b77c",
+    "src/identifiers/order.py": "57949a8dcedbad9d9955a69d4e769b7c4332ab6b15607fb133ac2761531ba34d",
+    "src/identifiers/invoice.py": "782e7a66a79bcd5cd6216f0b04e335c77a41889132df1f721412dac807374b23",
+    "tests/test_contract.py": "e461e1ecb3bbca0c4884ea1f654e5d7e436826bc71af5ae82f5f628d116b1b9c",
+    "tests/test_user.py": "a707463663baa1a1385496491c7b5fee715bd3db5718631d80fd02cdf0d7acab",
+    "tests/test_order.py": "68a6f48ee2ebfef89e07f84630391c3ae652dbcc28fd4f66c089cb17ece872fa",
+    "tests/test_invoice.py": "50cf866b26500f7500d5eaf9148dafec1e3741aa30dcfbb3b7956b6b954d7b7c",
+    "tests/test_security.py": "145c8ea954d7eb9e19a67c7337759e8eb33778cf87d06095e216268ce1a7edce"
+  },
+  "authority_boundary": {
+    "authorized": [
+      "merge producer pull request after checks pass",
+      "publish immutable producer commit reference",
+      "integrate an independent consumer through a pull request",
+      "merge consumer integration after checks pass",
+      "create and close a deliberately incompatible upgrade pull request"
+    ],
+    "not_authorized": [
+      "production deployment outside GitHub",
+      "secret changes",
+      "billing or spending",
+      "destructive repository deletion"
+    ]
+  },
+  "rollback": "Revert the merge commit or restore consumers to the last passing immutable producer commit."
+}

@@ -34,3 +34,6 @@
 
 [OK] 2026-02-12 pre-commit passed
 [INCOMPLETE] 2026-10-02 UTP-PORT-002: JSON regression repaired; local typecheck/build/4 tests/integration pass; hosted gates and PR merge conflicts unresolved.
+[INCOMPLETE] 2026-10-02 CI-FONT-001: local YAML/shell and preservation checks pass; remote CI/artifact execution pending.
+[OK] 2026-10-02 CI-FONT-001: hosted CI 36978742379 and font build 36978652589 passed; artifact 11214542655 verified; merge pending.
+[INCOMPLETE] 2026-10-02 UTP-PORT-002: reconciled main locally; both histories retained; hosted integration gates pending.

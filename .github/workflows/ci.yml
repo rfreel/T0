@@ -6,6 +6,7 @@ on:
 
 jobs:
   backpressure:
+    name: CI
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

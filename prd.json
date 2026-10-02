@@ -122,7 +122,7 @@
         "Pipeline uses a stable per-run timestamp passed to target artifact metadata"
       ],
       "passes": false,
-      "notes": "Implemented stable recursive serializer, improved validation errors, and unified run timestamp usage for generated artifact metadata. 2026-10-02: Fixed JSON semantics for optional values, nested ordering, arrays and toJSON; repaired TypeScript diagnostics and OpenTelemetry initialization. Serialization regression fails on original code and passes after repair. Local Node 24 typecheck, build, 4 tests, integration and telemetry init/shutdown passed; coordinator independently repeated typecheck/build/tests/integration using corepack pnpm. Hosted acceptance remains incomplete and PR merge conflicts remain unresolved; golden check only verifies fixture existence."
+      "notes": "Implemented stable recursive serializer, improved validation errors, and unified run timestamp usage for generated artifact metadata. 2026-10-02: Fixed JSON semantics for optional values, nested ordering, arrays and toJSON; repaired TypeScript diagnostics and OpenTelemetry initialization. Serialization regression fails on original code and passes after repair. Local Node 24 typecheck, build, 4 tests, integration and telemetry init/shutdown passed; coordinator independently repeated typecheck/build/tests/integration using corepack pnpm. Hosted acceptance remains incomplete and PR merge conflicts remain unresolved; golden check only verifies fixture existence. Main integrated locally with both pipeline and font-workflow history retained; hosted verification and merge still pending."
     },
     {
       "id": "UTP-PORT-003",
@@ -134,6 +134,18 @@
       ],
       "passes": true,
       "notes": "Updated packageManager from pnpm@10.0.0 to pnpm@10.23.0 so pnpm resolves locally from corepack cache."
+    },
+    {
+      "id": "CI-FONT-001",
+      "title": "Publish temporary font pack without writing to protected main",
+      "acceptance": [
+        "Font pack build remains unchanged",
+        "Generated zip is downloadable as a workflow artifact",
+        "Workflow needs only read access to repository contents",
+        "GitHub CI and font build pass for the repair branch"
+      ],
+      "passes": true,
+      "notes": "Verified implementation fee3f698dd2a8180a4b7ac43829b9a9656b48396: hosted CI run 36978742379 and font build run 36978652589 pass. Artifact 11214542655 font-frontier exists, unexpired, 5438639 bytes, SHA256 b89a8b1ed58c081d8eca2f98abc114d2a0233ac02fb4036a5700092b4e6ea37a. No main push; merge pending."
     }
   ]
 }
