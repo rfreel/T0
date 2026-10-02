@@ -33,3 +33,4 @@
 [OK] 2026-02-12 pre-commit passed
 
 [OK] 2026-02-12 pre-commit passed
+[INCOMPLETE] 2026-10-02 UTP-PORT-002: JSON regression repaired; local typecheck/build/4 tests/integration pass; hosted gates and PR merge conflicts unresolved.

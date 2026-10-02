@@ -15,7 +15,7 @@ export const createDefaultToolRegistry = (): ToolRegistry => {
     name: 'transition_mapper',
     description: 'Maps transitions to requirement identifiers.',
     jsonSchema: z.object({ transitions: z.array(z.string()) }).strict(),
-    callable: async ({ transitions }) => transitions.map((transition, i) => ({ requirementId: `R${i + 1}`, transition })),
+    callable: async ({ transitions }: { transitions: string[] }) => transitions.map((transition, i) => ({ requirementId: `R${i + 1}`, transition })),
   });
 
   registry.register({

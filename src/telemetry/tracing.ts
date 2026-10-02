@@ -1,16 +1,15 @@
 import { context, Span, SpanStatusCode, trace } from '@opentelemetry/api';
-import { Resource } from '@opentelemetry/resources';
+import { resourceFromAttributes } from '@opentelemetry/resources';
 import { NodeSDK } from '@opentelemetry/sdk-node';
 import {
   BatchSpanProcessor,
   ConsoleSpanExporter,
-  MultiSpanProcessor,
 } from '@opentelemetry/sdk-trace-base';
 import { AppEnv } from '../config/env.js';
 import { NdjsonFileSpanExporter } from './fileSpanExporter.js';
 
 export const initTelemetry = (env: AppEnv): NodeSDK => {
-  const resource = new Resource({
+  const resource = resourceFromAttributes({
     'service.name': 'rlm-mastra-style-agent',
     'service.version': '0.1.0',
     'deployment.environment': env.NODE_ENV,
@@ -18,10 +17,10 @@ export const initTelemetry = (env: AppEnv): NodeSDK => {
 
   const sdk = new NodeSDK({
     resource,
-    spanProcessor: new MultiSpanProcessor([
+    spanProcessors: [
       new BatchSpanProcessor(new ConsoleSpanExporter()),
       new BatchSpanProcessor(new NdjsonFileSpanExporter(env.TRACE_FILE_PATH)),
-    ]),
+    ],
   });
 
   void sdk.start();

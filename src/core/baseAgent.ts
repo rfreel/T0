@@ -94,7 +94,7 @@ export class BaseAgent {
 
     const toolText = String(output.value);
     this.options.memory.remember('tool', toolText);
-    this.emit({ type: 'tool', toolName, payload: output.value });
+    this.emit({ type: 'tool', toolName: tool.name, payload: output.value });
     return ok(toolText);
   }
 

@@ -121,8 +121,8 @@
         "Harness returns actionable schema validation errors for invalid tool arguments",
         "Pipeline uses a stable per-run timestamp passed to target artifact metadata"
       ],
-      "passes": true,
-      "notes": "Implemented stable recursive serializer, improved validation errors, and unified run timestamp usage for generated artifact metadata."
+      "passes": false,
+      "notes": "Implemented stable recursive serializer, improved validation errors, and unified run timestamp usage for generated artifact metadata. 2026-10-02: Fixed JSON semantics for optional values, nested ordering, arrays and toJSON; repaired TypeScript diagnostics and OpenTelemetry initialization. Serialization regression fails on original code and passes after repair. Local Node 24 typecheck, build, 4 tests, integration and telemetry init/shutdown passed; coordinator independently repeated typecheck/build/tests/integration using corepack pnpm. Hosted acceptance remains incomplete and PR merge conflicts remain unresolved; golden check only verifies fixture existence."
     },
     {
       "id": "UTP-PORT-003",
