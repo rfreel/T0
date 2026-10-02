@@ -75,6 +75,18 @@
       ],
       "passes": true,
       "notes": "Updated GitHub plan with autocommit zero-friction guidance and safeguards."
+    },
+    {
+      "id": "CI-FONT-001",
+      "title": "Publish temporary font pack without writing to protected main",
+      "acceptance": [
+        "Font pack build remains unchanged",
+        "Generated zip is downloadable as a workflow artifact",
+        "Workflow needs only read access to repository contents",
+        "GitHub CI and font build pass for the repair branch"
+      ],
+      "passes": false,
+      "notes": "Local YAML and shell checks pass; semantic comparison proves build step unchanged and direct push removed. Remote CI and artifact execution remain pending."
     }
   ]
 }
