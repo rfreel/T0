@@ -13,3 +13,5 @@
 [OK] 2026-01-28 pre-commit passed
 
 [OK] 2026-01-28 pre-commit passed
+[INCOMPLETE] 2026-10-02 CI-FONT-001: local YAML/shell and preservation checks pass; remote CI/artifact execution pending.
+[OK] 2026-10-02 CI-FONT-001: hosted CI 36978742379 and font build 36978652589 passed; artifact 11214542655 verified; merge pending.

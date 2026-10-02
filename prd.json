@@ -75,6 +75,18 @@
       ],
       "passes": true,
       "notes": "Updated GitHub plan with autocommit zero-friction guidance and safeguards."
+    },
+    {
+      "id": "CI-FONT-001",
+      "title": "Publish temporary font pack without writing to protected main",
+      "acceptance": [
+        "Font pack build remains unchanged",
+        "Generated zip is downloadable as a workflow artifact",
+        "Workflow needs only read access to repository contents",
+        "GitHub CI and font build pass for the repair branch"
+      ],
+      "passes": true,
+      "notes": "Verified implementation fee3f698dd2a8180a4b7ac43829b9a9656b48396: hosted CI run 36978742379 and font build run 36978652589 pass. Artifact 11214542655 font-frontier exists, unexpired, 5438639 bytes, SHA256 b89a8b1ed58c081d8eca2f98abc114d2a0233ac02fb4036a5700092b4e6ea37a. No main push; merge pending."
     }
   ]
 }
