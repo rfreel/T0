@@ -1,0 +1,4 @@
+service_id,current_option_id,required_features,feature_weights,min_feature_coverage,allow_cancel
+notes,notes_current,"capture|offline|search|export|web_clip","0.20|0.20|0.25|0.20|0.15",0.85,false
+cloud_storage,cloud_current,"sync|sharing|versioning|mobile|export","0.25|0.20|0.20|0.20|0.15",0.85,false
+automation,automation_current,"triggers|multi_step|webhooks|scheduling|export","0.20|0.25|0.20|0.20|0.15",0.80,true
