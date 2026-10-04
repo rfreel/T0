@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "procedure": {
+    "id": "index-raw-trace",
+    "purpose": "Preserve raw execution evidence before summarization and make it addressable by trajectory and episode."
+  },
+  "source": {
+    "skill": "cass",
+    "path": "skills/upstream/cass/SKILL.md"
+  },
+  "triggering_conditions": [
+    "tool execution",
+    "decision-changing observation",
+    "task completion or failure"
+  ],
+  "prohibited_conditions": [
+    "secrets without redaction policy"
+  ],
+  "required_inputs": [
+    "raw output",
+    "trajectory id",
+    "timestamp",
+    "environment"
+  ],
+  "inspected_preconditions": [
+    "trace destination writable"
+  ],
+  "proposed_transition": {
+    "from": "ephemeral output",
+    "to": "content-addressed trace with provenance"
+  },
+  "authority_class": "local_reversible_write",
+  "execution_steps": [
+    "write raw bytes",
+    "calculate SHA-256",
+    "record environment and producer",
+    "link from episode"
+  ],
+  "expected_effect": "Later sessions can inspect the source evidence rather than relying on summaries.",
+  "verifier": {
+    "mechanism": "hash_recompute",
+    "acceptance": [
+      "stored bytes hash equals manifest",
+      "episode link resolves"
+    ]
+  },
+  "rollback": {
+    "method": "remove unreferenced trace before repository publication",
+    "irreversible": false
+  },
+  "emitted_trace": [
+    "decision record",
+    "verifier result"
+  ],
+  "known_failure_modes": [
+    "secret retention",
+    "summary substituted for source"
+  ],
+  "confidence": 0.86,
+  "status": "candidate",
+  "review_trigger": "after first end-to-end trial"
+}

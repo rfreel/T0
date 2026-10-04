@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "trajectory_id": "bootstrap-2026-07-30",
+  "objective": "Place the verified trajectory-system bootstrap in a namespaced experiment inside rfreel/T0 without changing T0 main.",
+  "authority": {
+    "granted": [
+      "read rfreel/T0",
+      "create dedicated feature branch in rfreel/T0",
+      "write the trajectory system under experiments/trajectory-system",
+      "open a draft pull request against main",
+      "verify remote files and pull request state"
+    ],
+    "withheld": [
+      "merge pull request",
+      "modify main directly",
+      "deploy or release",
+      "change secrets or billing",
+      "delete repository or unrelated files"
+    ]
+  },
+  "environment": {
+    "identity": "GitHub account rfreel through connected GitHub app",
+    "workspace": "rfreel/T0/experiments/trajectory-system",
+    "repository": "rfreel/T0",
+    "branch": "agent/trajectory-system-bootstrap",
+    "pull_request": 46,
+    "external_services": [
+      "GitHub"
+    ]
+  },
+  "current_state": {
+    "source_archive": "/mnt/data/jeffrey-public-skills-pack-2026-07-29.zip",
+    "source_skills": 27,
+    "local_source_commit": "457909b1a8df0cf184a739041ee0b25171d53528",
+    "remote_target": "rfreel/T0/experiments/trajectory-system",
+    "main_commit_observed": "9a855b13ba4d0340265d57a5fc6d1b132e792c07",
+    "materialized_commit": "d1645a8f0116f7e8c161d72209b24d472de7d551",
+    "verification_record_commit": "94fd088fe8946684ce10d260b1db8beeaa344e75",
+    "draft_pull_request_url": "https://github.com/rfreel/T0/pull/46"
+  },
+  "material_rivals": [
+    {
+      "hypothesis": "A compact repository scaffold is sufficient to reconstruct and resume work.",
+      "action_difference": "Run one real task through the branch before promoting procedures."
+    },
+    {
+      "hypothesis": "The scaffold creates more coordination cost than it removes.",
+      "action_difference": "Abandon or shrink fields after trial evidence."
+    }
+  ],
+  "next_decision": {
+    "observation": "Can a fresh session reconstruct and complete one bounded real task from the branch without hidden conversational context?",
+    "collection_method": "start a trial from KERNEL.yaml and ACTIVE_TRAJECTORY.json, stop at its declared decision boundary, and compare recovery cost against an ordinary session"
+  },
+  "selected_action": {
+    "action": "retain the system on the dedicated branch and draft PR pending an operational trial or user merge decision",
+    "reversibility": "close the draft PR and delete the feature branch",
+    "expected_effect": "durable, inspectable GitHub home with T0 root behavior unchanged",
+    "stopping_boundary": "publication verified; do not merge"
+  },
+  "verification": {
+    "failure_mechanism": "wrong repository, wrong path, missing files, altered T0 main, non-draft publication, or source hash drift",
+    "verifier": "GitHub branch comparison, PR file enumeration, fetched control files, and hash-gated source materialization",
+    "acceptance_condition": "50 files appear under the namespace, 27 skill hashes pass, the PR is draft, and main remains at the observed base commit",
+    "result": {
+      "status": "PASS",
+      "pull_request": 46,
+      "draft": true,
+      "merged": false,
+      "changed_files": 50,
+      "all_changed_files_namespaced": true,
+      "base_sha": "9a855b13ba4d0340265d57a5fc6d1b132e792c07",
+      "materialized_head_sha": "d1645a8f0116f7e8c161d72209b24d472de7d551",
+      "temporary_workflow_removed": true,
+      "skill_hashes_verified": 27,
+      "repository_status_checks": "none configured or reported"
+    }
+  },
+  "recovery": {
+    "checkpoint": "draft PR 46 with materialized sources and verification record",
+    "rollback": "close draft PR 46 and delete agent/trajectory-system-bootstrap; main remains unchanged",
+    "resumable_from": "experiments/trajectory-system/state/ACTIVE_TRAJECTORY.json"
+  },
+  "status": "verified"
+}

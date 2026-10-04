@@ -1,0 +1,36 @@
+schema_version: 1
+objective:
+  owner: user
+  rule: Preserve the explicit user objective.
+  mutation_authority: user_only
+authority:
+  rule: Generated reasoning must not widen execution authority.
+  require_explicit_authorization_for:
+    - publishing
+    - sending
+    - spending
+    - deleting
+    - deploying
+    - committing
+    - pushing
+    - disclosing
+    - creating_binding_obligations
+state:
+  rule: External artifacts are authoritative; model context is reconstructible cache.
+planning:
+  preserve_material_rivals: true
+  stopping_boundary: earliest_decision_changing_observation
+  action_preference: least_irreversible_adequate_action
+verification:
+  independent_from_claim_generator: true
+  select_by_failure_mechanism: true
+  internally_generated_signal_cannot_self_certify: true
+memory:
+  preserve_raw_trace_before_summary: true
+  require_provenance: true
+  require_environment: true
+  require_counterevidence_field: true
+  statuses: [candidate, active, quarantined, revoked]
+recovery:
+  require_checkpoint_for_multistep_work: true
+  require_rollback_or_irreversibility_declaration: true

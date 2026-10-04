@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "procedure": {
+    "id": "planning-observation-boundary",
+    "purpose": "Convert an ambiguous objective into a plan that stops at the earliest observation capable of changing the decision."
+  },
+  "source": {
+    "skill": "planning-workflow",
+    "path": "skills/upstream/planning-workflow/SKILL.md"
+  },
+  "triggering_conditions": [
+    "multi-step task",
+    "material uncertainty changes next action"
+  ],
+  "prohibited_conditions": [
+    "simple factual answer",
+    "irreversible action before observation"
+  ],
+  "required_inputs": [
+    "objective",
+    "constraints",
+    "current evidence"
+  ],
+  "inspected_preconditions": [
+    "objective owner identified",
+    "authority boundary recorded"
+  ],
+  "proposed_transition": {
+    "from": "ambiguous objective",
+    "to": "bounded plan with rival hypotheses and stopping boundary"
+  },
+  "authority_class": "read_and_propose",
+  "execution_steps": [
+    "inspect direct evidence",
+    "state material rivals",
+    "identify earliest decision-changing observation",
+    "select least irreversible probe"
+  ],
+  "expected_effect": "A plan whose next execution step is bounded by an observable decision point.",
+  "verifier": {
+    "mechanism": "schema_validation_and_human_review",
+    "acceptance": [
+      "two rivals when materially distinct",
+      "named observation",
+      "named stopping boundary"
+    ]
+  },
+  "rollback": {
+    "method": "restore predecessor trajectory file",
+    "irreversible": false
+  },
+  "emitted_trace": [
+    "decision record",
+    "verifier result"
+  ],
+  "known_failure_modes": [
+    "planning beyond available evidence",
+    "rivals differ only rhetorically"
+  ],
+  "confidence": 0.78,
+  "status": "candidate",
+  "review_trigger": "after first end-to-end trial"
+}

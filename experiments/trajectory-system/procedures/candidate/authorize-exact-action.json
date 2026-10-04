@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "procedure": {
+    "id": "authorize-exact-action",
+    "purpose": "Bind authorization to the exact identity, environment, target, payload hash, expected effect, and expiry."
+  },
+  "source": {
+    "skill": "slb",
+    "path": "skills/upstream/slb/SKILL.md"
+  },
+  "triggering_conditions": [
+    "action crosses configured authority boundary"
+  ],
+  "prohibited_conditions": [
+    "unresolved target",
+    "payload differs after approval",
+    "expired authorization"
+  ],
+  "required_inputs": [
+    "action payload",
+    "identity",
+    "environment",
+    "target",
+    "expected effect"
+  ],
+  "inspected_preconditions": [
+    "risk class computed",
+    "rollback declared"
+  ],
+  "proposed_transition": {
+    "from": "proposed consequential action",
+    "to": "authorized exact action or blocked proposal"
+  },
+  "authority_class": "authorization_gate",
+  "execution_steps": [
+    "canonicalize payload",
+    "hash payload and context",
+    "obtain required approval",
+    "verify hash and expiry immediately before execution",
+    "record result"
+  ],
+  "expected_effect": "Approval cannot silently transfer to a different command, target, or environment.",
+  "verifier": {
+    "mechanism": "hash_and_context_match",
+    "acceptance": [
+      "identity matches",
+      "environment matches",
+      "target matches",
+      "payload hash matches",
+      "approval unexpired"
+    ]
+  },
+  "rollback": {
+    "method": "action-specific rollback required before authorization",
+    "irreversible": false
+  },
+  "emitted_trace": [
+    "decision record",
+    "verifier result"
+  ],
+  "known_failure_modes": [
+    "correlated reviewers",
+    "incorrect environment classification",
+    "post-approval payload mutation"
+  ],
+  "confidence": 0.82,
+  "status": "candidate",
+  "review_trigger": "after first end-to-end trial"
+}

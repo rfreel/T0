@@ -1,0 +1,6 @@
+schema_version: 1
+default_authority: read_and_propose
+write_boundary:
+  local_reversible_artifacts: allowed_when_explicitly_requested
+  remote_or_binding_actions: explicit_target_authorization_required
+required_binding_fields: [identity, environment, target, expected_effect]
