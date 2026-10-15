@@ -1,0 +1,46 @@
+name: OEWN 2025 semantic corpus transfer
+on:
+  push:
+    branches:
+      - experiments/oewn-semantic-distinction-2025
+permissions:
+  contents: read
+jobs:
+  obtain-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Retrieve complete versioned sense database
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p corpus
+          SOURCE='https://en-word.net/static/english-wordnet-2025.xml.gz'
+          FALLBACK='https://github.com/globalwordnet/english-wordnet/releases/download/2025-edition/english-wordnet-2025.xml.gz'
+          curl --fail --location --retry 3 --max-time 180 "$SOURCE" --output corpus/english-wordnet-2025.xml.gz || curl --fail --location --retry 3 --max-time 180 "$FALLBACK" --output corpus/english-wordnet-2025.xml.gz
+          gzip -t corpus/english-wordnet-2025.xml.gz
+          sha256sum corpus/english-wordnet-2025.xml.gz | tee corpus/source.sha256
+          python - <<'PY'
+          import gzip, xml.etree.ElementTree as E
+          name="corpus/english-wordnet-2025.xml.gz"
+          words=senses=synsets=0
+          with gzip.open(name,"rb") as f:
+              for _,element in E.iterparse(f,events=("end",)):
+                  name=element.tag.split("}")[-1]
+                  if name=="LexicalEntry":
+                      words+=1
+                      senses+=sum(c.tag.split("}")[-1]=="Sense" for c in element)
+                      element.clear()
+                  elif name=="Synset":
+                      synsets+=1
+                      element.clear()
+          assert words>100000 and senses>150000 and synsets>100000, (words,senses,synsets)
+          print("OEWN 2025 complete inventory:", words, senses, synsets)
+          PY
+      - name: Preserve verified original corpus
+        uses: actions/upload-artifact@v4
+        with:
+          name: oewn-2025-original
+          path: corpus/
+          if-no-files-found: error
+          retention-days: 7
